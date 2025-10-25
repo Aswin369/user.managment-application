@@ -1,0 +1,156 @@
+<div class="user-profile-page">
+    <div class="header">
+        <button class="logout-btn">Logout</button>
+        <div class="user-name">John Doe</div>
+    </div>
+
+    <!-- Main Profile Container - All in One -->
+    <div class="profile-container">
+        <!-- Profile Header with Photo -->
+        <div class="profile-header">
+            <div class="profile-photo-container">
+                <div class="profile-photo" id="profilePhoto">JD</div>
+            </div>
+            
+            <div class="photo-actions">
+                <label for="fileInput" class="photo-btn" style="cursor: pointer;">Upload Photo</label>
+                <button class="photo-btn" id="viewPhotoBtn">View Photo</button>
+            </div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <h2 class="section-title">Profile Information</h2>
+
+            <div class="info-row">
+                <div class="info-label">Full Name</div>
+                <div class="info-value">John Doe</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">Email Address</div>
+                <div class="info-value">john.doeexample.com</div>
+            </div>
+
+            <div class="edit-profile-section">
+                <button class="edit-profile-btn">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crop Modal -->
+    <div class="modal" id="cropModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crop Your Photo</h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+
+            <div class="crop-container">
+                <div class="crop-area">
+                    <img id="cropImage" class="crop-image" src="" alt="Crop preview">
+                    <div class="crop-circle"></div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn cancel-btn" id="cancelBtn">Cancel</button>
+                <button class="modal-btn save-btn" id="saveCropBtn">Save Photo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const cropModal = document.getElementById('cropModal');
+        const cropImage = document.getElementById('cropImage');
+        const profilePhoto = document.getElementById('profilePhoto');
+        const closeModal = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveCropBtn = document.getElementById('saveCropBtn');
+        const viewPhotoBtn = document.getElementById('viewPhotoBtn');
+
+        let currentImageData = null;
+
+        // When file is selected
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    currentImageData = event.target.result;
+                    cropImage.src = currentImageData;
+                    cropModal.classList.add('active');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Close modal functions
+        closeModal.addEventListener('click', () => {
+            cropModal.classList.remove('active');
+            fileInput.value = '';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            cropModal.classList.remove('active');
+            fileInput.value = '';
+        });
+
+        // Save cropped image
+        saveCropBtn.addEventListener('click', () => {
+            if (currentImageData) {
+                // Create canvas to crop image in circular shape
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const size = 250;
+                
+                canvas.width = size;
+                canvas.height = size;
+
+                // Create circular clip
+                ctx.beginPath();
+                ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.clip();
+
+                // Draw image
+                const img = new Image();
+                img.onload = function() {
+                    const scale = Math.max(size / img.width, size / img.height);
+                    const x = (size - img.width * scale) / 2;
+                    const y = (size - img.height * scale) / 2;
+                    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+                    
+                    // Convert to data URL and set as profile photo
+                    const croppedImage = canvas.toDataURL('image/png');
+                    profilePhoto.innerHTML = `<img src="${croppedImage}" alt="Profile">`;
+                    
+                    // Close modal
+                    cropModal.classList.remove('active');
+                    fileInput.value = '';
+                };
+                img.src = currentImageData;
+            }
+        });
+
+        // View photo button
+        viewPhotoBtn.addEventListener('click', () => {
+            const img = profilePhoto.querySelector('img');
+            if (img) {
+                window.open(img.src, '_blank');
+            } else {
+                alert('No photo uploaded yet!');
+            }
+        });
+
+        // Close modal when clicking outside
+        cropModal.addEventListener('click', (e) => {
+            if (e.target === cropModal) {
+                cropModal.classList.remove('active');
+                fileInput.value = '';
+            }
+        });
+    </script>
+</div>
