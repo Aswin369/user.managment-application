@@ -13,11 +13,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   addUser(data:userModel):Observable<{user: userModel, token:string}> {
-    console.log("thisiasd", data);
-     return of({
-      user: data,             // return the same data as user
-      token: 'dummy-token-123'  // dummy token
-    });
+    return this.http.post<{user:userModel,token:string}>(`${USER_API}/register`,data)
   }
 
 }

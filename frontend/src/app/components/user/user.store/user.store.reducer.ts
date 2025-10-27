@@ -5,8 +5,6 @@ import { signup, signupSuccess } from "./user.store.action";
 export const userAuthReducer = createReducer(
     initialState,
     on(signup,(state,action)=>{
-        console.log("Thisis sdfsta",action.signupData)
-
         return {
             ...state,
             user:action.signupData,

@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { User } from "../types/user.interface";
 
 const userSchema = new Schema<User>({
@@ -30,4 +30,11 @@ const userSchema = new Schema<User>({
     }
 },{timestamps:true})
 
-export default userSchema
+userSchema.set("toJSON", {
+  transform: function (doc, ret: any) {
+    delete ret.password;
+    return ret;
+  },
+});
+
+export const UserModel = mongoose.model<User>('User',userSchema)

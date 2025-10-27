@@ -1,11 +1,13 @@
 import express, { Request, Response } from "express";
 import cors from 'cors';
 import connectDB from "./config/connect.database";
-
+import userRouter from './routes/user.routes'
+import dotenv from 'dotenv'
 connectDB()
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT  ||  3000;
+console.log(PORT)
 
 app.use(express.json());
 
@@ -15,7 +17,7 @@ app.use(cors({
   credentials:true
 }))
 
-
+app.use("/user",userRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
