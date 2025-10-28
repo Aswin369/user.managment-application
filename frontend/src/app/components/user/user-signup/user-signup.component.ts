@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import {AbstractControl, Form, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators} from '@angular/forms'
 import { userModel } from '../../../../model/signup.model';
 import { Store } from '@ngrx/store';
@@ -7,21 +7,33 @@ import { signup } from '../user.store/user.store.action';
 import { getAuthError, getAuthLoading } from '../user.store/user.store.selector';
 import { Observable } from 'rxjs';
 import { LoadingpageComponent } from '../../loadingpage/loadingpage.component';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-user-signup',
-  imports: [ReactiveFormsModule, CommonModule, AsyncPipe, LoadingpageComponent],
+  imports: [ReactiveFormsModule, CommonModule, AsyncPipe, LoadingpageComponent, RouterLink],
   templateUrl: './user-signup.component.html',
   styleUrl: './user-signup.component.css'
 })
-export class UserSignupComponent {
+export class UserSignupComponent implements AfterViewInit{
+  @Output() switchToLogin = new EventEmitter<void>();
+  @ViewChild('firstName') firstName!: ElementRef
+
+
+  ngAfterViewInit(): void {
+    this.firstName.nativeElement.focus()
+  }
 
   signupForm!:FormGroup
   loading$!:Observable<boolean>
   errorMessage$!:Observable<string | null> 
   constructor(private formBuilder: FormBuilder, private store: Store) {}
 
-  
+
+  goToLogin() {
+    this.switchToLogin.emit();
+  }
+
   ngOnInit():void {
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[A-Za-z]+$')]],

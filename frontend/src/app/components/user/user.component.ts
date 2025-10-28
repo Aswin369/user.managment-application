@@ -6,26 +6,32 @@ import { userModel } from '../../../model/signup.model';
 import { getUser } from './user.store/user.store.selector';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 @Component({
   selector: 'app-user',
-  imports: [UserSignupComponent, CommonModule, AsyncPipe, UserProfileComponent],
+  imports: [UserSignupComponent, CommonModule, AsyncPipe, UserProfileComponent, UserLoginComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent {
   user$!: Observable<userModel | null>
   constructor(private store: Store) {
-    // this.user$ = this.store.select(getUser)
-    // console.log("This is userOCmpoera", this.user$)
   }
   
   ngOnInit() {
   this.user$ = this.store.select(getUser);
-
-  this.user$.subscribe(user => {
-    console.log('User data from store:', user);
-  });
 }
+
+showLogin:boolean = false
+
+onShowSignup() {
+    this.showLogin = false;
+  }
+
+  onShowLogin() {
+    this.showLogin = true;
+  }
+
 
 }

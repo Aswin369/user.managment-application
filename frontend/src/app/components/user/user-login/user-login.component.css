@@ -1,181 +1,188 @@
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        .user-login-body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: rgb(250, 248, 241);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+.user-login-body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: rgb(250, 248, 241);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
-        .container {
-            background: rgb(250, 248, 241);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 450px;
-            padding: 50px 40px;
-            animation: slideIn 0.5s ease-out;
-        }
+.container {
+  background: rgb(250, 248, 241);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 450px;
+  padding: 50px 40px;
+  animation: slideIn 0.5s ease-out;
+}
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-        h1 {
-            color: rgb(76, 118, 59);
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 32px;
-            font-weight: 600;
-        }
+h1 {
+  color: rgb(76, 118, 59);
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 32px;
+  font-weight: 600;
+}
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 35px;
-            font-size: 14px;
-        }
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 35px;
+  font-size: 14px;
+}
 
-        .form-group {
-            margin-bottom: 25px;
-        }
+.form-group {
+  margin-bottom: 25px;
+}
 
-        label {
-            display: block;
-            color: rgb(76, 118, 59);
-            font-weight: 500;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+label {
+  display: block;
+  color: rgb(76, 118, 59);
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
 
-        input {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background: white;
-            color: #333;
-        }
+input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: white;
+  color: #333;
+}
 
-        input:focus {
-            outline: none;
-            border-color: rgb(76, 118, 59);
-            box-shadow: 0 0 0 3px rgba(76, 118, 59, 0.1);
-        }
+input:focus {
+  outline: none;
+  border-color: rgb(76, 118, 59);
+  box-shadow: 0 0 0 3px rgba(76, 118, 59, 0.1);
+}
 
-        input::placeholder {
-            color: #aaa;
-        }
+input::placeholder {
+  color: #aaa;
+}
 
-        .forgot-password {
-            text-align: right;
-            margin-top: -15px;
-            margin-bottom: 20px;
-        }
+.forgot-password {
+  text-align: right;
+  margin-top: -15px;
+  margin-bottom: 20px;
+}
 
-        .forgot-password a {
-            color: rgb(76, 118, 59);
-            text-decoration: none;
-            font-size: 13px;
-            transition: all 0.3s ease;
-        }
+.forgot-password a {
+  color: rgb(76, 118, 59);
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
 
-        .forgot-password a:hover {
-            text-decoration: underline;
-            color: rgb(66, 108, 49);
-        }
+.forgot-password a:hover {
+  text-decoration: underline;
+  color: rgb(66, 108, 49);
+}
 
-        .signin-btn {
-            width: 100%;
-            padding: 16px;
-            background: rgb(76, 118, 59);
-            color: rgb(250, 248, 241);
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.signin-btn {
+  width: 100%;
+  padding: 16px;
+  background: rgb(76, 118, 59);
+  color: rgb(250, 248, 241);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-        .signin-btn:hover {
-            background: rgb(66, 108, 49);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(76, 118, 59, 0.4);
-        }
+.signin-btn:hover {
+  background: rgb(66, 108, 49);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(76, 118, 59, 0.4);
+}
 
-        .signin-btn:active {
-            transform: translateY(0);
-        }
+.signin-btn:active {
+  transform: translateY(0);
+}
 
-        .signup-link {
-            text-align: center;
-            margin-top: 25px;
-            color: #666;
-            font-size: 14px;
-        }
+.signup-link {
+  text-align: center;
+  margin-top: 25px;
+  color: #666;
+  font-size: 14px;
+}
 
-        .signup-link a {
-            color: rgb(76, 118, 59);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
+.signup-link a {
+  color: rgb(76, 118, 59);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
 
-        .signup-link a:hover {
-            color: rgb(66, 108, 49);
-            text-decoration: underline;
-        }
+.signup-link a:hover {
+  color: rgb(66, 108, 49);
+  text-decoration: underline;
+}
 
-        .divider {
-            width: 50px;
-            height: 3px;
-            background: rgb(76, 118, 59);
-            margin: 0 auto 30px;
-            border-radius: 2px;
-        }
+.divider {
+  width: 50px;
+  height: 3px;
+  background: rgb(76, 118, 59);
+  margin: 0 auto 30px;
+  border-radius: 2px;
+}
 
-        .welcome-back {
-            text-align: center;
-            margin-bottom: 35px;
-        }
+.welcome-back {
+  text-align: center;
+  margin-bottom: 35px;
+}
 
-        .welcome-back h2 {
-            color: rgb(76, 118, 59);
-            font-size: 24px;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
+.welcome-back h2 {
+  color: rgb(76, 118, 59);
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 40px 30px;
-            }
+@media (max-width: 480px) {
+  .container {
+    padding: 40px 30px;
+  }
 
-            h1 {
-                font-size: 28px;
-            }
+  h1 {
+    font-size: 28px;
+  }
 
-            .welcome-back h2 {
-                font-size: 20px;
-            }
-        }
+  .welcome-back h2 {
+    font-size: 20px;
+  }
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}

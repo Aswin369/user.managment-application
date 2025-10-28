@@ -1,7 +1,13 @@
 <div *ngIf="!(user$ | async); else profile">
-    <app-user-signup></app-user-signup>
+  <ng-container *ngIf="!showLogin; else login">
+    <app-user-signup (switchToLogin)="onShowLogin()"></app-user-signup>
+  </ng-container>
+
+  <ng-template #login>
+    <app-user-login (switchToSignup)="onShowSignup()"></app-user-login>
+  </ng-template>
 </div>
 
 <ng-template #profile>
-    <app-user-profile></app-user-profile>
+  <app-user-profile></app-user-profile>
 </ng-template>

@@ -22,12 +22,51 @@ export class UserService {
             password:hashedPassword
         }
         const savedUser = await this.userRepository.createUser(newUserData)
-        console.log(savedUser,"sadfsdf")
+        console.log(process.env.JWT_SECRET,"creating time env")
        const token = jwt.sign(
         {userId:savedUser._id, email:savedUser.email},
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
        )
+       console.log("creating User token",token)
         return {user: savedUser, token}
     }
+
+    getUser = async(data:any)=>{
+        const {userId} = data
+        console.log("thsi is user id ",userId)
+        const userData = await this.userRepository.getUser(userId)
+        console.log("get data from frontend", userData)
+        if(!userData){
+            throw new Error("User not Exist")
+        }
+        return userData
+    }
+
+    loginUser = async(data:any) =>{
+        const {email, password} = data
+
+        const userData = await this.userRepository.loginGetUser(email)
+        if(!userData){
+            const error:any = new Error("User does not Exist")
+            error.statuscode = 404
+            throw error
+        }
+
+        const passwordIsmatch = await bcrypt.compare(password, userData.password)
+        if(!passwordIsmatch){
+            const error: any = new Error("Password is Incorrect")
+            error.statuscode = 401
+            throw error
+        }
+        const token = jwt.sign(
+        {userId:userData._id, email:userData.email},
+        process.env.JWT_SECRET as string,
+        { expiresIn: "1h" }
+       )
+        
+        return {userData, token}
+
+    }
+
 }

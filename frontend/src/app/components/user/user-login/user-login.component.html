@@ -1,29 +1,98 @@
 <div class="user-login-body">
-    <div class="container">
-        <h1>Welcome Back</h1>
-        <div class="divider"></div>
-        <p class="subtitle">Sign in to continue to your account</p>
+  <div class="container">
+    <h1>Welcome Back</h1>
+    <div class="divider"></div>
+    <p class="subtitle">Sign in to continue to your account</p>
 
-        <form>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          #emailInput
+          required
+        />
+        <div
+          *ngIf="
+            (loginForm.get('email')?.touched ||
+              loginForm.get('email')?.dirty) &&
+            loginForm.get('email')?.invalid
+          "
+        >
+          <!-- Required -->
+          <small
+            *ngIf="loginForm.get('email')?.errors?.['required']"
+            style="color: red"
+          >
+            Email is required
+          </small>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            </div>
-
-            <div class="forgot-password">
-                <a href="#">Forgot Password?</a>
-            </div>
-
-            <button type="submit" class="signin-btn">Sign In</button>
-        </form>
-
-        <div class="signup-link">
-            Don't have an account? <a href="#">Sign Up</a>
+          <!-- Invalid email format -->
+          <small
+            *ngIf="loginForm.get('email')?.errors?.['email']"
+            style="color: red"
+          >
+            Please provide a valid email
+          </small>
         </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+        <div
+          *ngIf="
+            loginForm.get('password')?.touched &&
+            loginForm.get('password')?.invalid
+          "
+        >
+          <small
+            *ngIf="loginForm.get('password')?.errors?.['required']"
+            style="color: red"
+            >Please enter password
+          </small>
+          <small
+            *ngIf="loginForm.get('password')?.errors?.['minlength']"
+            style="color: red"
+            >Minimum length is 5
+          </small>
+          <small
+            *ngIf="loginForm.get('password')?.errors?.['maxlength']"
+            style="color: red"
+            >Maximum length is 10
+          </small>
+          <small
+            *ngIf="loginForm.get('password')?.errors?.['pattern']"
+            style="color: red"
+            >Provide a number, a special charater and a number
+          </small>
+        </div>
+      </div>
+
+      <!-- <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div> -->
+
+      <button type="submit" class="signin-btn">Sign In</button>
+      <div *ngIf="loginError$ | async as loginError" class="error-message">
+        {{ loginError }}
+      </div>
+    </form>
+
+    <div class="signup-link">
+      Don't have an account?
+      <a routerLink="/signup" (click)="goToSignUp()">Sign Up</a>
     </div>
+  </div>
 </div>

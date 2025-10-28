@@ -13,3 +13,5 @@ export const initialState: AuthState = {
     error: null,
     loading:false
 }
+
+
