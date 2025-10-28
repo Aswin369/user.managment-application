@@ -57,10 +57,18 @@
                 
 
             <button type="submit" class="signup-btn">Sign Up</button>
+            <div style="color: red; text-align: center; margin-top: 10px; font-weight: 500;">
+                {{errorMessage$ | async}}
+            </div>
         </form>
 
         <div class="signin-link">
             Do you have an account? <a href="#">Sign In</a>
         </div>
     </div>
+    
+</div>
+
+<div *ngIf="loading$ | async">
+<app-loadingpage></app-loadingpage>
 </div>

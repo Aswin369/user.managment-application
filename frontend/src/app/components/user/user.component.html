@@ -1,3 +1,7 @@
-<div>
+<div *ngIf="!(user$ | async); else profile">
     <app-user-signup></app-user-signup>
 </div>
+
+<ng-template #profile>
+    <app-user-profile></app-user-profile>
+</ng-template>

@@ -10,6 +10,7 @@ export class UserService {
     registerUser = async (userData: User) =>{
         const existingUser = await this.userRepository.findUserByEmail(userData.email);
         if(existingUser) {
+            console.log('Emial is exist', existingUser)
             throw new Error("User already exists")
         } 
         const {firstName, secondName, email, password} = userData;

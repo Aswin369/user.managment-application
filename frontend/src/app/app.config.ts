@@ -9,5 +9,5 @@ import { userAuthReducer } from './components/user/user.store/user.store.reducer
 import { AuthEffects } from './components/user/user.store/user.store.effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), provideStore({auth:userAuthReducer}), provideEffects([AuthEffects])]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), provideStore({ auth: userAuthReducer }), provideEffects([AuthEffects])]
 };

@@ -9,9 +9,12 @@ export class UserController {
             console.log("Hello", req.body)
             const {user, token} = await this.userService.registerUser(req.body)
             res.status(201).json({message:"User registered successfully", token,user})
-        }catch(err){
-            console.error("Error:", err);
-            res.status(500).json({ message: "Registration failed" });
+        }catch(err:any){
+            console.error("Error: in User register", err);
+                res.status(409).json({
+                message: err.message || "Something went wrong",
+            });  
+            // return res.status(500).json({message: "Internal server error please try again"})
         }
     }
 

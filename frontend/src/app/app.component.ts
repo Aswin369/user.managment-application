@@ -12,7 +12,7 @@ interface ReplyResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [UserSignupComponent],
+  imports: [UserComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

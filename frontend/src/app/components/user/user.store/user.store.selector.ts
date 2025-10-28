@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AuthState } from "./user.store.state";
 import { AUTH_STATE } from "../../../constants/auth.constants";
 
-export const getAuthState = createFeatureSelector<AuthState>(AUTH_STATE);
+export const getAuthState = createFeatureSelector<AuthState>('auth');
 
 export const getUser = createSelector(getAuthState, (state)=> state.user)
 export const getToken = createSelector(getAuthState, (state)=>state.token)
