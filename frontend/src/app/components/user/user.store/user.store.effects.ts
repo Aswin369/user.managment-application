@@ -12,8 +12,11 @@ import {
   loginUser,
   loginUserSuccess,
   loginUserFailure,
+  updateUser,
+  updateUserError,
+  updateUserSuccess
 } from './user.store.action';
-import { switchMap, map, catchError, tap } from 'rxjs/operators';
+import { switchMap, map, catchError, tap, mergeMap} from 'rxjs/operators';
 import { userModel } from '../../../../model/signup.model';
 import { Router } from '@angular/router';
 @Injectable()
@@ -116,5 +119,26 @@ export class AuthEffects {
         })
       ),
     { dispatch: false }
-  );
+  )
+
+updateUser$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(updateUser),
+    mergeMap(({ userData }) =>
+      this.userService.updateUser(userData).pipe(
+        map((res: any) => updateUserSuccess({ user: res.user })),
+        catchError(err =>
+          of(updateUserError({ error: err.error?.message || 'Update failed' }))
+        )
+      )
+    )
+  )
+);
+
+
+
+
+
+
+
 }

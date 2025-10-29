@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserSignupComponent } from './components/user/user-signup/user-signup.component';
 import { Store } from '@ngrx/store';
 import { autoLogin } from './components/user/user.store/user.store.action';
+import { UserUpdateComponent } from './components/user/user-update/user-update.component';
 
 interface ReplyResponse {
   reply: string;

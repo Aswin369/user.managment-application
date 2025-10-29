@@ -3,6 +3,7 @@ import { UserController } from '../controllers/user.controller'
 import { UserRepository } from '../repositories/implementations/user.repository'
 import { UserService } from '../services/user.service'
 import authenticateToken from '../middlewares/authenticate.middlewares'
+import upload from '../middlewares/multer.middleware'
 
 
 const router = express.Router()
@@ -14,4 +15,6 @@ const userController = new UserController(userService)
 router.post("/register",userController.register)
 router.post('/login', userController.loginUser)
 router.get('/me', authenticateToken, userController.getUser)
+router.post('/uploadImage',upload.single("image"), userController.uploadImage)
+router.put('/updateuser', userController.updateUser)
 export default router

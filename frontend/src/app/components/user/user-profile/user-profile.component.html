@@ -9,12 +9,33 @@
         <!-- Profile Header with Photo -->
         <div class="profile-header">
             <div class="profile-photo-container">
-                <div class="profile-photo" #profilePhoto>JD</div>
-            </div>
+  
+  <!-- ✅ If new (cropped) image exists, show it -->
+  <img *ngIf="selectedImage; else CloudOrInitial"
+       [src]="selectedImage"
+       class="profile-photo" />
+
+  <!-- ✅ Otherwise check cloud image or initials -->
+  <ng-template #CloudOrInitial>
+    <img *ngIf="(user$ | async)?.profileImage; else Initials"
+         [src]="(user$ | async)?.profileImage"
+         class="profile-photo" />
+
+    <ng-template #Initials>
+      <div class="profile-photo initials">
+        {{ (user$ | async)?.firstName?.charAt(0) }}
+        {{ (user$ | async)?.secondName?.charAt(0) }}
+      </div>
+    </ng-template>
+  </ng-template>
+
+</div>
+
+
             
             <div class="photo-actions">
                 <label for="fileInput" class="photo-btn" style="cursor: pointer;">Upload Photo</label>
-                <button class="photo-btn" id="viewPhotoBtn">View Photo</button>
+                <!-- <button class="photo-btn" id="viewPhotoBtn">View Photo</button> -->
             </div>
                 <input type="file" id="fileInput" #fileInput (change)="onFileSelected($event)" accept="image/*" />
         </div>
@@ -34,7 +55,7 @@
             </div>
 
             <div class="edit-profile-section">
-                <button class="edit-profile-btn">Edit Profile</button>
+                <button class="edit-profile-btn" (click)="showEditForm()" >Edit Profile</button>
             </div>
         </div>
     </div>
@@ -57,7 +78,16 @@
             <div class="modal-actions">
                 <button class="modal-btn cancel-btn" id="cancelBtn">Cancel</button>
                 <button class="photo-btn" (click)="saveCroppedImage()">Save Photo</button>
+                <div *ngIf="uploadError" class="error-text">
+  {{ uploadError }}
+</div>
             </div>
         </div>
     </div>
+
+    <!-- Edit Profile Modal -->
+    <div>
+        <app-user-update *ngIf="howEdit"(close)="closeEditForm()"></app-user-update>
+    </div>
+
 </div>

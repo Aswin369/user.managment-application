@@ -3,6 +3,9 @@ import { User } from "../types/user.interface";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
+// import { v2 as cloudinary } from 'cloudinary';
+import cloudinary from "../config/cloudinary";
+
 dotenv.config();
 export class UserService {
     constructor(private userRepository:  IUserRepository) {}
@@ -68,5 +71,34 @@ export class UserService {
         return {userData, token}
 
     }
+
+async uploadImage(email: string, file: Express.Multer.File) {
+    const user = await this.userRepository.findUserByEmail(email);
+    if (!user) return null;
+    console.log("Cloudinary API Key:", process.env.CLOUDINARY_API_KEY)
+    const uploadedImage = await new Promise<any>((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "user-profile" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      stream.end(file.buffer);
+    });
+    console.log("Uploade image", uploadedImage)
+
+    return await this.userRepository.updateProfileImage(email, uploadedImage.secure_url);
+  }
+
+  updateUser = async (firstName:string,secondName:string,email:string,userId:string)=>{
+    //   console.log(userId,"From serivce dowmn ")
+    const updatedUser = await this.userRepository.updateUser(firstName,secondName,email,userId)
+    // console.log("From serivce up ", updatedUser)
+    if(!updatedUser){
+        throw new Error("User unpdate failed")
+    }
+    return updatedUser
+  }
 
 }

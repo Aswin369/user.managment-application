@@ -14,3 +14,7 @@ export const logout = createAction('[Auth] Logout')
 export const loginUser = createAction('[Auth] Login User', props<{userData:UserLoginModel}>())
 export const loginUserSuccess = createAction('[Auth Loign User Success', props<{user:userModel, token:string}>())
 export const loginUserFailure = createAction('[Auth], Login User Failure',props<{error:string}>())
+
+export const updateUser = createAction('[Auth] User update', props<{userData:Partial<userModel>}>())
+export const updateUserSuccess = createAction('[Auth] User update Success', props<{user:userModel}>())
+export const updateUserError = createAction('[Auth] User update error', props<{error:string}>())

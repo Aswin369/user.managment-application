@@ -24,7 +24,7 @@ import dotenv from "dotenv";
     // console.log("dsfsdf")
     // console.log("Decode item ", decoded);
     req.user  = decoded
-    console.log("req.user", req.user)
+    // console.log("req.user", req.user)
     next();
   } catch (error) {
     console.error("Invalid token:", error);

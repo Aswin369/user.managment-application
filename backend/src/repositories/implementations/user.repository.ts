@@ -19,4 +19,17 @@ export class UserRepository implements IUserRepository{
     async loginGetUser(email:string):Promise<User | null> {
         return await UserModel.findOne({email:email})
     }
+    async updateProfileImage(email: string, imageUrl: string) {
+    return await UserModel.findOneAndUpdate(
+      { email },
+      { profileImage: imageUrl },
+      { new: true }
+    );
+  }
+
+  async updateUser(firstName: string, secondName: string, email: string, userId: string): Promise<User | null> {
+        return await UserModel.findByIdAndUpdate(userId,{firstName:firstName, secondName:secondName, email:email},{new:true})
+        // console.log("this repo", vale)
+        // return vale
+    }
 }

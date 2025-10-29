@@ -1,15 +1,17 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { userModel } from '../../../../model/signup.model';
-import { getUser } from '../user.store/user.store.selector';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { logout } from '../user.store/user.store.action';
-import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../../services/user.service';
+import { getUser } from '../user.store/user.store.selector';
+import { AuthState } from '../user.store/user.store.state';
+import { UserUpdateComponent } from '../user-update/user-update.component';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, CommonModule, UserUpdateComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
@@ -17,35 +19,55 @@ export class UserProfileComponent {
 
   user$!: Observable<userModel | null>;
   selectedImage: string | null = null;
-
+  
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('profilePhoto') profilePhoto!: ElementRef<HTMLDivElement>;
+  @ViewChild('profilePhoto', { static: false }) profilePhoto!: ElementRef;
 
-  constructor(private http: HttpClient, private store: Store<{ user: userModel }>) {}
+
+  constructor(
+    private store: Store<{ auth: AuthState }>,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
-    this.user$ = this.store.select((state: any) => state.auth.user);
-  }
-
-  ngAfterViewInit() {
-    console.log('✅ profilePhoto initialized:', this.profilePhoto);
+    this.user$ = this.store.select(getUser);
   }
 
   onLogout() {
     this.store.dispatch(logout());
   }
-
+  uploadError: string | null = null;
   async onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.selectedImage = e.target.result;
-      this.openCropModal();
-    };
-    reader.readAsDataURL(file);
+  this.uploadError = null; // reset previous errors
+
+  // ✅ Validate file type (must be image)
+  const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+  if (!allowedTypes.includes(file.type)) {
+    this.uploadError = "Only image files (PNG, JPG, JPEG, WEBP) are allowed!";
+    this.fileInput.nativeElement.value = '';
+    return;
   }
+
+  // ✅ Validate file size (max 2MB)
+  const maxSize = 2 * 1024 * 1024; // 2MB
+  if (file.size > maxSize) {
+    this.uploadError = "File too large! Max allowed size: 2MB.";
+    this.fileInput.nativeElement.value = '';
+    return;
+  }
+
+  // ✅ Show cropping modal if valid
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    this.selectedImage = e.target.result;
+    this.openCropModal();
+  };
+  reader.readAsDataURL(file);
+}
+
 
   openCropModal() {
     document.getElementById('cropModal')?.classList.add('active');
@@ -59,45 +81,66 @@ export class UserProfileComponent {
   }
 
   async saveCroppedImage() {
-    if (!this.selectedImage) return;
+  if (!this.selectedImage) return;
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d')!;
-    const size = 250;
-    canvas.width = size;
-    canvas.height = size;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d')!;
+  const size = 250;
+  canvas.width = size;
+  canvas.height = size;
 
-    ctx.beginPath();
-    ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.clip();
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.clip();
 
-    const img = new Image();
-    img.onload = async () => {
-      const scale = Math.max(size / img.width, size / img.height);
-      const x = (size - img.width * scale) / 2;
-      const y = (size - img.height * scale) / 2;
-      ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+  const img = new Image();
+  img.onload = () => {
+    const scale = Math.max(size / img.width, size / img.height);
+    const x = (size - img.width * scale) / 2;
+    const y = (size - img.height * scale) / 2;
+    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
 
-      const croppedBase64 = canvas.toDataURL('image/png');
-      (this.profilePhoto.nativeElement as HTMLElement).innerHTML = `<img src="${croppedBase64}" alt="Profile" />`;
+    // ✅ Convert canvas → Blob file instead of base64
+    canvas.toBlob((blob) => {
+  if (!blob) return;
 
-      // ✅ Upload to Cloudinary
-      try {
-        const res = await this.http.post<any>('http://localhost:4000/user/upload-photo', {
-          image: croppedBase64,
-        }).toPromise();
+  const file = new File([blob], "profile.png", { type: "image/png" });
 
-        console.log('Uploaded Image URL:', res.imageUrl);
-        alert('Photo uploaded successfully!');
-      } catch (error) {
-        console.error('Upload failed:', error);
-        alert('Upload failed');
-      }
+  // ✅ Updated here
+  this.selectedImage = URL.createObjectURL(file);
 
-      this.closeCropModal();
-    };
-    img.src = this.selectedImage!;
-  }
+  this.store.select(getUser).pipe(take(1)).subscribe(user => {
+    if (!user) return;
+
+    const formData = new FormData();
+    formData.append("email", user.email);
+    formData.append("image", file);
+
+    this.userService.uploadImage(formData).subscribe({
+      next: (res) => console.log("✅ Uploaded:", res),
+      error: (err) => console.error("❌ Upload failed:", err)
+    });
+  });
+
+  this.closeCropModal();
+}, "image/png");
+  };
+
+  img.src = this.selectedImage!;
+}
+
+
+// edit function
+
+howEdit: boolean = false;
+
+showEditForm() {
+  this.howEdit = true;
+}
+
+closeEditForm() {
+  this.howEdit = false;
+}
 
 }
