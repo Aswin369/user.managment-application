@@ -143,4 +143,12 @@ closeEditForm() {
   this.howEdit = false;
 }
 
+  h:string = "hello"
+
+  @Input()home:string = "aswin"
+
+  sendData(){
+    this.h = "hi"
+  }
+
 }

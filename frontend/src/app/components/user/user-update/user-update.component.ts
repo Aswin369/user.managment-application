@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, take, skip } from 'rxjs';
 import { userModel } from '../../../../model/signup.model';
@@ -46,11 +46,18 @@ export class UserUpdateComponent {
       this.editFrom.markAllAsTouched();
       return;
     }
-
+    console.log("dfasdf",this.editFrom.value)
     this.store.dispatch(updateUser({ userData: this.editFrom.value }));
   }
 
   closeForm() {
     this.close.emit();
   }
+
+  @Output() t= new EventEmitter<string>()
+
+  getingData(){
+    this.t.emit()
+  }
+
 }

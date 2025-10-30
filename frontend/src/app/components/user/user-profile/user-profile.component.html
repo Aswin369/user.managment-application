@@ -78,6 +78,7 @@
             <div class="modal-actions">
                 <button class="modal-btn cancel-btn" id="cancelBtn">Cancel</button>
                 <button class="photo-btn" (click)="saveCroppedImage()">Save Photo</button>
+                <button (click)="sendData()"></button>
                 <div *ngIf="uploadError" class="error-text">
   {{ uploadError }}
 </div>
@@ -86,8 +87,9 @@
     </div>
 
     <!-- Edit Profile Modal -->
+
     <div>
-        <app-user-update *ngIf="howEdit"(close)="closeEditForm()"></app-user-update>
+        <app-user-update *ngIf="howEdit"(close)="closeEditForm()"  (h)="sendData()"></app-user-update>
     </div>
 
 </div>
