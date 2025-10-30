@@ -3,19 +3,14 @@ import { UserSignupComponent } from './components/user/user-signup/user-signup.c
 import { UserViewProfleComponent } from './components/user/user-view-profle/user-view-profle.component';
 import { authGuard } from './guards/auth.guard';
 import { LoadingpageComponent } from './components/loadingpage/loadingpage.component';
+import { UserComponent } from './components/user/user.component';
 
 export const routes: Routes = [
-    {
-        path:"singup",
-        component:UserSignupComponent
-    },
-    {
-        path:"profile",
-        component:UserViewProfleComponent, 
-        canActivate:[authGuard]
-    },
-    {
-        path:"login",
-        component:LoadingpageComponent
-    }
+   {
+    path: '',
+    component: UserComponent,
+    loadChildren: () =>
+      import('./components/user/user-routes/user.routes')
+        .then(m => m.USER_ROUTES)
+  }
 ];
