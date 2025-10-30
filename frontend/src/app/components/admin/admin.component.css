@@ -1,0 +1,30 @@
+.admin-layout {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgb(250, 248, 241);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+}
+
+.content-area {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.page-content {
+  display: none;
+}
+
+.page-content.active {
+  display: block;
+}

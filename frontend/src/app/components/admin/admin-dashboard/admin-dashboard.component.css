@@ -1,0 +1,12 @@
+.dashboard-content {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-content h1 {
+    color: rgb(76, 118, 59);
+    font-size: 36px;
+    font-weight: 600;
+}

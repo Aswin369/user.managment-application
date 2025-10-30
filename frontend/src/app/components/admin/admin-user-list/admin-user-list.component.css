@@ -1,0 +1,127 @@
+.user-list-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.user-list-header {
+    margin-bottom: 30px;
+}
+
+.user-list-header h1 {
+    color: rgb(76, 118, 59);
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgb(250, 248, 241);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.user-table thead {
+    background: rgb(76, 118, 59);
+}
+
+.user-table th {
+    padding: 16px;
+    text-align: left;
+    color: rgb(250, 248, 241);
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.user-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(76, 118, 59, 0.1);
+    color: #333;
+    font-size: 14px;
+}
+
+.user-table tbody tr:hover {
+    background: rgba(76, 118, 59, 0.05);
+}
+
+.user-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-view {
+    background: rgb(76, 118, 59);
+    color: rgb(250, 248, 241);
+}
+
+.btn-view:hover {
+    background: rgb(56, 88, 44);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(76, 118, 59, 0.3);
+}
+
+.btn-block {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-block:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.btn-unblock {
+    background: #27ae60;
+    color: white;
+}
+
+.btn-unblock:hover {
+    background: #229954;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.btn-edit {
+    background: #f39c12;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #d68910;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
+}
+
+@media (max-width: 768px) {
+    .user-table {
+        font-size: 13px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}

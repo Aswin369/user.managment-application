@@ -1,0 +1,43 @@
+.navigation {
+  background: rgb(76, 118, 59);
+  width: 250px;
+  padding: 30px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  min-height: calc(100vh - 68px);
+}
+
+.nav-menu {
+  list-style: none;
+}
+
+.nav-item {
+  margin-bottom: 8px;
+}
+
+.nav-link {
+  display: block;
+  padding: 15px 30px;
+  color: rgb(250, 248, 241);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.nav-link:hover {
+  background: rgba(250, 248, 241, 0.1);
+  border-left-color: rgb(250, 248, 241);
+}
+
+.nav-link.active {
+  background: rgba(250, 248, 241, 0.15);
+  border-left-color: rgb(250, 248, 241);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .navigation {
+    width: 200px;
+  }
+}
