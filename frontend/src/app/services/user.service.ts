@@ -38,7 +38,7 @@ export class UserService {
   }
 
   uploadImage(formData: FormData) {
-  return this.http.post(`${USER_API}/uploadImage`, formData);
+  return this.http.post<{ message: string, imageUrl: string }>(`${USER_API}/uploadImage`, formData);
 }
   updateUser(updatedData: Partial<userModel>): Observable<userModel> {
     console.log("THidsjfk", updatedData)

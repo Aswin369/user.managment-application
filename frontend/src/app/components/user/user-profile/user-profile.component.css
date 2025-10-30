@@ -465,3 +465,6 @@
     margin-top: 10px;
     text-align: center;
 }
+* {
+  user-select: none;
+}

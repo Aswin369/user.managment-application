@@ -5,10 +5,11 @@ import { userModel } from '../../../../model/signup.model';
 import { getUser } from '../user.store/user.store.selector';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { updateUser } from '../user.store/user.store.action';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-update',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './user-update.component.html',
   styleUrl: './user-update.component.css'
 })
@@ -23,8 +24,8 @@ export class UserUpdateComponent {
     this.userData$ = this.store.select(getUser);
 
     this.editFrom = this.fb.group({
-      firstName: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-      secondName: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+      firstName: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[A-Za-z]+$')]],
+      secondName: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[A-Za-z]+$')]],
       email: ["", [Validators.required, Validators.email]]
     });
 

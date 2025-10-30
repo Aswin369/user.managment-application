@@ -8,6 +8,7 @@ import { UserService } from '../../../services/user.service';
 import { getUser } from '../user.store/user.store.selector';
 import { AuthState } from '../user.store/user.store.state';
 import { UserUpdateComponent } from '../user-update/user-update.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-profile',
@@ -26,7 +27,8 @@ export class UserProfileComponent {
 
   constructor(
     private store: Store<{ auth: AuthState }>,
-    private userService: UserService
+    private userService: UserService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class UserProfileComponent {
 
   onLogout() {
     this.store.dispatch(logout());
+    this.toast.success("Logout success")
   }
   uploadError: string | null = null;
   async onFileSelected(event: any) {
@@ -118,8 +121,15 @@ export class UserProfileComponent {
     formData.append("image", file);
 
     this.userService.uploadImage(formData).subscribe({
-      next: (res) => console.log("✅ Uploaded:", res),
-      error: (err) => console.error("❌ Upload failed:", err)
+      next: (res) => {
+        console.log("Uploaded:", res),
+        this.toast.success(res.message)
+      },
+      error: 
+      (err) => {
+        console.error("❌ Upload failed:", err)
+        this.toast.error(err.error?.message || "Upload failed!")
+      }
     });
   });
 

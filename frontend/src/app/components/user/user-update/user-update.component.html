@@ -6,20 +6,37 @@
                 <div class="form-group">
                     <label for="firstname">First Name</label>
                     <input type="text" id="firstname"  formControlName="firstName"  name="firstName" required>
+                    <div *ngIf="editFrom.get('firstName')?.touched && editFrom.get('firstName')?.invalid">
+                <small *ngIf="editFrom.get('firstName')?.errors?.['required']" style="color: red;">First name is required </small>
+                <small *ngIf="editFrom.get('firstName')?.errors?.['minlength']" style="color: red;" >Minimum length is 3 characters </small>
+                <small *ngIf="editFrom.get('firstName')?.errors?.['maxlength']" style="color: red;">Maximum length is 10 characters </small>
+                <small *ngIf="editFrom.get('firstName')?.errors?.['pattern']"style="color: red;">Cannot to be write numbers </small>
+            </div>
+
                 </div>
                 <div class="form-group">
                     <label for="lastname">Last Name</label>
                     <input type="text" id="lastname"  formControlName="secondName" name="secondName" required>
+                    <div *ngIf="editFrom.get('secondName')?.touched && editFrom.get('secondName')?.invalid">
+                <small *ngIf="editFrom.get('secondName')?.errors?.['required']" style="color: red;">First name is required </small>
+                <small *ngIf="editFrom.get('secondName')?.errors?.['minlength']" style="color: red;" >Minimum length is 3 characters </small>
+                <small *ngIf="editFrom.get('secondName')?.errors?.['maxlength']" style="color: red;">Maximum length is 10 characters </small>
+                <small *ngIf="editFrom.get('secondName')?.errors?.['pattern']"style="color: red;">Cannot to be write numbers </small>
+            </div>
                 </div>
                 <div class="form-group">
                     <label for="email" #email>Email</label>
                     <input type="email" id="email"  formControlName="email" name="email" required>
+                    <div *ngIf="editFrom.get('email')?.touched && editFrom.get('email')?.invalid">
+                    <small *ngIf="editFrom.get('email')?.errors?.['required']" style="color: red;">Email is required </small>
+                    <small  *ngIf="editFrom.get('email')?.errors?.['email']" style="color: red;" >Please provide valid email </small>
                 </div>
-                <button type="submit" class="submit-btn">asdfasdf{{t}}</button>
+                </div>
+                <button type="submit" class="submit-btn">Update Profile</button>
                 <button type="submit" class="submit-btn" (click)="closeForm()">Cancel</button>
             </form>
         </div>
     </div>
 </div>
 
-<div></div>
+

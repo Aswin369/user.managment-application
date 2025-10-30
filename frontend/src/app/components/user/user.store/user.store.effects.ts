@@ -19,10 +19,11 @@ import {
 import { switchMap, map, catchError, tap, mergeMap} from 'rxjs/operators';
 import { userModel } from '../../../../model/signup.model';
 import { Router } from '@angular/router';
+import {  ToastrService } from 'ngx-toastr';
 @Injectable()
 export class AuthEffects {
   private actions$ = inject(Actions);
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private toast: ToastrService) {}
 
   signup$ = createEffect(() =>
     this.actions$.pipe(
@@ -50,7 +51,7 @@ export class AuthEffects {
         ofType(signupSuccess),
         tap(({ user, token }: { user: userModel; token: string }) => {
           localStorage.setItem('token', token);
-          // localStorage.setItem('user', JSON.stringify(user));
+          this.toast.success("Success")
           this.router.navigate(['/profile']);
         })
       ),
@@ -94,14 +95,21 @@ export class AuthEffects {
         return this.userService.login(action.userData).pipe(
           map((response) => {
             console.log('This is resosd from this effect', response);
+            if(response.user){
+              this.toast.success("Login Success")
+            }
             return loginUserSuccess({
               user: response.user,
               token: response.token,
             });
+            
           }),
           catchError((error) => {
             console.error('Backend error:', error);
             const backendMessage = error?.error?.message || 'Something went wrong';
+            if(error){
+              this.toast.error(backendMessage)
+            }
             return of(loginUserFailure({ error: backendMessage }));
           })
         );
@@ -126,10 +134,14 @@ updateUser$ = createEffect(() =>
     ofType(updateUser),
     mergeMap(({ userData }) =>
       this.userService.updateUser(userData).pipe(
-        map((res: any) => updateUserSuccess({ user: res.user })),
-        catchError(err =>
-          of(updateUserError({ error: err.error?.message || 'Update failed' }))
-        )
+        map((res: any) => {
+          this.toast.success("User updated")
+          return updateUserSuccess({ user: res.user })}),
+        catchError(err =>{
+          const er = err.error?.message || 'Update failed'
+          this.toast.error(er)
+          return of(updateUserError({ error: er }))
+})
       )
     )
   )

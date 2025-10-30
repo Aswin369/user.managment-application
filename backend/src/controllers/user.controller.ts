@@ -7,13 +7,11 @@ export class UserController {
 
     register = async (req: Request, res: Response)=>{
         try{
-            console.log("Hello", req.body)
             const {user, token} = await this.userService.registerUser(req.body)
             res.status(201).json({message:"User registered successfully", token,user})
         }catch(err:any){
             console.error("Error: in User register", err);
             res.status(409).json({message: err.message || "Something went wrong"})  
-            // return res.status(500).json({message: "Internal server error please try again"})
         }
     }
 
@@ -29,9 +27,7 @@ export class UserController {
 
     loginUser = async(req:Request, res: Response)=>{
         try {
-            console.log("This is req.boduy", req.body)
             const {userData, token} = await this.userService.loginUser(req.body)
-            console.log("userdata",userData)
             res.status(200).json({message:"success", user:userData, token:token})
         } catch (error:any) {
             console.error("Error found in the login user", error);
@@ -50,13 +46,12 @@ export class UserController {
     }
 
     const updatedUser = await this.userService.uploadImage(email, file);
-    console.log("This updated user",updatedUser)
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
     return res.json({
-      message: "Image uploaded successfully ✅",
+      message: "Image uploaded successfully",
       imageUrl: updatedUser.profileImage,
     });
 
@@ -78,7 +73,6 @@ export class UserController {
       const decoded = jwt.verify(token, secret) as JwtPayload & { userId: string };
       const userId = decoded.userId;
       const userUpdatedData = await this.userService.updateUser(firstName,secondName,email,userId)
-      console.log("userUpdatedData", userUpdatedData)
       res.status(201).json({message:"Updated success", user:userUpdatedData})
     } catch (error:any) {
       console.error("Updated have some error", error)

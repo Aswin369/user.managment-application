@@ -186,3 +186,6 @@ input::placeholder {
   text-align: center;
   font-weight: 500;
 }
+* {
+  user-select: none;
+}
