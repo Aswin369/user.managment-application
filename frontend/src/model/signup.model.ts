@@ -4,4 +4,6 @@ export interface userModel {
     email:string;
     password:string;
     profileImage?: string;
+    isAdmin?:boolean,
+    role:"user" | "admin"
 }

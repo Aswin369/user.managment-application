@@ -23,13 +23,14 @@ export const userAuthReducer = createReducer(
     error: null,
   })),
 
-  on(signupSuccess, (state, { user, token }) => ({
-    ...state,
-    user,
-    token,
-    loading: false,
-    error: null,
-  })),
+on(signupSuccess, (state, { user, token }) => ({
+  ...state,
+  user: user,
+  token,
+  role: user.role,
+  loading: false,
+  error: null,
+})),
 
   on(signupFailure, (state, { error }) => ({
     ...state,
@@ -37,48 +38,54 @@ export const userAuthReducer = createReducer(
     error,
   })),
 
-  on(autoLoginSuccess, (state, { user }) => ({
-    ...state,
-    user,
-  })),
-
-  on(logout, (state) => ({
-    ...state,
-    user: null,
-    token: null,
-  })),
-
-  on(loginUser, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(loginUserSuccess, (state, { user, token }) => ({
-    ...state,
-    user,
-    token,
-    loading: false,
-    error: null,
-  })),
-
-  on(loginUserFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error,
-  })),
-
+ on(autoLoginSuccess, (state, { user }) => ({
+  ...state,
+  user,
+  token: state.token ?? localStorage.getItem('token'), // set token if not already there
+  role: user.role, // ✅ store role
+  loading: false,
+  error: null,
+}))
+,
   on(updateUser, (state) => ({
     ...state,
     loading: true,
   })),
+
+on(loginUser,(state)=>{
+  return {
+    ...state,
+    loading:true,
+    error:null
+  }
+}),
+on(loginUserSuccess,(state,{user,token})=>{
+  console.log("This is reducer",user)
+  return {
+    ...state,
+    user,
+    token,
+    role:user.role,
+    loading:false,
+    error:null
+  }
+}),
+
+on(loginUserFailure,(state,{error})=>{
+  return {
+    ...state,
+    loading:false,
+    error
+  }
+}),
+
 on(updateUserSuccess, (state, { user }) => {
   console.log("Reducer received updated user:", user);
   const user1 = {...state.user, ...user}
   
   return {
     ...state,
-    user: user, // ✅ merge updated data
+    user: user, 
     loading: false,
     error: null
   };

@@ -6,7 +6,8 @@ export class UserRepository implements IUserRepository{
 
     async createUser(userData: User): Promise<User> {
         const user = new UserModel(userData)
-        return await user.save()
+         await user.save()
+         return user
     }
 
     async findUserByEmail(email: string): Promise<User | null> {

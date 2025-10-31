@@ -1,4 +1,25 @@
-<div *ngIf="!(user$ | async); else profile">
+<ng-container *ngIf="(user$ | async) as user; else authScreens">
+
+  <ng-container *ngIf="(getRole$ | async) as role">
+
+    <!-- ✅ Admin Role -->
+    <ng-container *ngIf="role === 'admin'; else userRole">
+      <app-admin-header></app-admin-header>
+      <!-- <router-outlet></router-outlet> -->
+    </ng-container>
+
+    <!-- ✅ Normal User -->
+    <ng-template #userRole>
+      <!-- <h1>asdf</h1> -->
+      <app-user-profile></app-user-profile>
+    </ng-template>
+
+  </ng-container>
+
+</ng-container>
+
+<!-- ✅ Not Logged In → Auth Screens -->
+<ng-template #authScreens>
   <ng-container *ngIf="!showLogin; else login">
     <app-user-signup (switchToLogin)="onShowLogin()"></app-user-signup>
   </ng-container>
@@ -6,8 +27,4 @@
   <ng-template #login>
     <app-user-login (switchToSignup)="onShowSignup()"></app-user-login>
   </ng-template>
-</div>
-
-<ng-template #profile>
-  <app-user-profile></app-user-profile>
 </ng-template>

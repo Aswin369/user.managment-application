@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   addUser(data:userModel):Observable<{user: userModel, token:string}> {
-    return this.http.post<{user:userModel,token:string}>(`${USER_API}/register`,data)
+    return this.http.post<{ user: userModel; token: string }>(`${USER_API}/register`,data)
   }
 
   getToken():string | null{
@@ -44,6 +44,8 @@ export class UserService {
     console.log("THidsjfk", updatedData)
   return this.http.put<userModel>(`${USER_API}/updateuser`, updatedData);
 }
-
+getUserRole(): string | null {
+    return localStorage.getItem('role'); 
+  }
 
 }

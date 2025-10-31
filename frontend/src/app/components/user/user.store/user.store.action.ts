@@ -3,7 +3,11 @@ import { userModel } from "../../../../model/signup.model";
 import { UserLoginModel } from "../../../../model/login.model";
 
 export const signup = createAction('[UserAuth] Signup', props<{signupData:userModel}>())
-export const signupSuccess = createAction('[UserAuth] Signup Success', props<{user:userModel, token:string}>())
+export const signupSuccess = createAction(
+  '[UserAuth] Signup Success',
+  props<{ user: userModel, token: string }>()
+);
+
 export const signupFailure  = createAction('[userAuth] Signup Failure',props<{error:string}>())
 
 export const autoLogin = createAction('[Auth] Auto Login');

@@ -12,4 +12,4 @@ export const getUser = createSelector(getAuthState, (state)=> {
 export const getToken = createSelector(getAuthState, (state)=>state.token)
 export const getAuthError = createSelector(getAuthState,(state)=>state.error)
 export const getAuthLoading = createSelector(getAuthState,(state)=>state.loading)
-
+export const getRole = createSelector(getAuthState,(state)=>state.role)

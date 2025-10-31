@@ -4,18 +4,17 @@
         <div class="user-name">{{ (user$ | async)?.firstName }}</div>
     </div>
 
-    <!-- Main Profile Container - All in One -->
+
     <div class="profile-container">
-        <!-- Profile Header with Photo -->
+
         <div class="profile-header">
             <div class="profile-photo-container">
-  
-  <!-- ✅ If new (cropped) image exists, show it -->
+
   <img *ngIf="selectedImage; else CloudOrInitial"
        [src]="selectedImage"
        class="profile-photo" />
 
-  <!-- ✅ Otherwise check cloud image or initials -->
+ 
   <ng-template #CloudOrInitial>
     <img *ngIf="(user$ | async)?.profileImage; else Initials"
          [src]="(user$ | async)?.profileImage"
@@ -35,12 +34,12 @@
             
             <div class="photo-actions">
                 <label for="fileInput" class="photo-btn" style="cursor: pointer;">Upload Photo</label>
-                <!-- <button class="photo-btn" id="viewPhotoBtn">View Photo</button> -->
+                
             </div>
                 <input type="file" id="fileInput" #fileInput (change)="onFileSelected($event)" accept="image/*" />
         </div>
 
-        <!-- Profile Content -->
+        
         <div class="profile-content">
             <h2 class="section-title">Profile Information</h2>
 
@@ -60,7 +59,7 @@
         </div>
     </div>
 
-    <!-- Crop Modal -->
+    
     <div class="modal" id="cropModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -86,7 +85,7 @@
         </div>
     </div>
 
-    <!-- Edit Profile Modal -->
+
 
     <div>
         <app-user-update *ngIf="howEdit"(close)="closeEditForm()"  (h)="sendData()"></app-user-update>

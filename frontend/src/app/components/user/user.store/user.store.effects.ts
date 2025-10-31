@@ -59,75 +59,57 @@ export class AuthEffects {
   );
 
   autoLogin$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(autoLogin),
-      switchMap(() => {
-        const token = this.userService.getToken();
-        if (!token) return of(logout());
-        return this.userService.getUser().pipe(
-          map((user) =>
-            // console.log(user)
-            autoLoginSuccess({ user })
-          ),
-          catchError(() => of(logout()))
-        );
-      })
-    )
-  );
+  this.actions$.pipe(
+    ofType(autoLogin),
+    switchMap(() => {
+      const token = this.userService.getToken();
+      if (!token) return of(logout());
 
-  logout$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(logout),
-        tap(() => {
-          this.userService.removeToken();
-          this.router.navigate(['/singup']);
-        })
-      ),
-    { dispatch: false }
-  );
+      return this.userService.getUser().pipe(
+        map((user: any) => {
+          console.log("this is auto login", user)
+          return autoLoginSuccess({ user });
+        }),
+        catchError(() => of(logout()))
+      );
+    })
+  )
+);
 
-  loginUser$ = createEffect(() =>
+
+
+ login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginUser),
-      switchMap((action) => {
-        console.log('THis action from effect', action);
-        return this.userService.login(action.userData).pipe(
-          map((response) => {
-            console.log('This is resosd from this effect', response);
-            if(response.user){
-              this.toast.success("Login Success")
-            }
-            return loginUserSuccess({
-              user: response.user,
-              token: response.token,
-            });
-            
+      mergeMap(({ userData }) =>{
+        console.log("This login user data",userData)
+       return  this.userService.login(userData).pipe(
+          map((resp: any) => {
+            return loginUserSuccess({ user: resp.user, token: resp.token });
           }),
-          catchError((error) => {
-            console.error('Backend error:', error);
-            const backendMessage = error?.error?.message || 'Something went wrong';
-            if(error){
-              this.toast.error(backendMessage)
-            }
-            return of(loginUserFailure({ error: backendMessage }));
-          })
-        );
-      })
+          catchError((error) => of(loginUserFailure({ error: error.message })))
+        )
+})
     )
   );
 
-  loginUserSuccess$ = createEffect(
+  
+  redirectAfterSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(loginUserSuccess),
-        tap(({ token }) => {
-          localStorage.setItem('token', token)
-          this.router.navigate(['/profile'])
+        tap(({ user }) => {
+          console.log("THis is effect", user)
+          if (user.role === 'admin') {
+            this.router.navigate(['/admindashboard']);
+          } else {
+            this.router.navigate(['/profile']);
+          }
         })
       ),
     { dispatch: false }
-  )
+  );
+ 
 
 updateUser$ = createEffect(() =>
   this.actions$.pipe(
@@ -146,11 +128,4 @@ updateUser$ = createEffect(() =>
     )
   )
 );
-
-
-
-
-
-
-
 }

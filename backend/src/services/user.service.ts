@@ -10,7 +10,7 @@ dotenv.config();
 export class UserService {
     constructor(private userRepository:  IUserRepository) {}
 
-    registerUser = async (userData: User) =>{
+    registerUser = async (userData: any) =>{
         const existingUser = await this.userRepository.findUserByEmail(userData.email);
         if(existingUser) {
             console.log('Emial is exist', existingUser)
@@ -25,14 +25,18 @@ export class UserService {
             password:hashedPassword
         }
         const savedUser = await this.userRepository.createUser(newUserData)
+
         console.log(process.env.JWT_SECRET,"creating time env")
        const token = jwt.sign(
-        {userId:savedUser._id, email:savedUser.email},
+        {userId:savedUser._id, email:savedUser.email, role: savedUser.isAdmin ? 'admin' : 'user'},
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
        )
-       console.log("creating User token",token)
-        return {user: savedUser, token}
+
+        return {
+  user: (savedUser as any).toObject(),
+  token
+};
     }
 
     getUser = async(data:any)=>{
@@ -63,12 +67,12 @@ export class UserService {
             throw error
         }
         const token = jwt.sign(
-        {userId:userData._id, email:userData.email},
+        {userId:userData._id, email:userData.email, role: userData.isAdmin ? 'admin' : 'user'},
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
        )
         
-        return {userData, token}
+        return {userData, token, role:userData.isAdmin}
 
     }
 
