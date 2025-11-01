@@ -11,14 +11,14 @@ export class UserRepository implements IUserRepository{
     }
 
     async findUserByEmail(email: string): Promise<User | null> {
-        return await UserModel.findOne({email})
+        return await UserModel.findOne({email}).lean();
     }
     async getUser(data: string): Promise<User | null> {
-        return await UserModel.findOne({_id:data}).select('-password');
+        return await UserModel.findOne({_id:data}).lean();
     }
 
     async loginGetUser(email:string):Promise<User | null> {
-        return await UserModel.findOne({email:email})
+        return await UserModel.findOne({email:email}).lean();
     }
     async updateProfileImage(email: string, imageUrl: string) {
     return await UserModel.findOneAndUpdate(

@@ -10,10 +10,11 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { AdminLoginComponent } from '../admin/components/admin-login/admin-login.component';
 import { AdminHeaderComponent } from '../admin/admin-header/admin-header.component';
 import { RouterOutlet } from '@angular/router';
+import { AdminComponent } from '../admin/admin.component';
 
 @Component({
   selector: 'app-user',
-  imports: [UserSignupComponent, CommonModule, AsyncPipe, UserProfileComponent, UserLoginComponent, AdminHeaderComponent, RouterOutlet],
+  imports: [UserSignupComponent, CommonModule, AsyncPipe, UserProfileComponent, UserLoginComponent, AdminHeaderComponent, RouterOutlet, AdminComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -24,8 +25,11 @@ export class UserComponent {
   }
   
   ngOnInit() {
-  this.user$ = this.store.select(getUser);
-  this.getRole$ = this.store.select(getRole)
+    this.user$ = this.store.select(getUser);
+    this.getRole$ = this.store.select(getRole)
+  //   this.user$.subscribe(role => {
+  //   console.log("This is role:adadfds", role);
+  // });
 }
 
 showLogin:boolean = false

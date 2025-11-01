@@ -20,23 +20,18 @@ export class UserController {
 
     getUser = async (req: Request, res: Response) => {
   try {
-    const user = await this.userService.getUser(req.user);
-
+    const newUser = req.user
+    const user = await this.userService.getUser(newUser);
+    console.log("This as contoelrdasdfaslkdjfasd",user)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    const plainUser = user.toObject(); // ✅ Convert to plain JS object
-    delete plainUser.password; // ✅ Remove password for security
-
-    const responseUser = {
-      ...plainUser,
-      role: plainUser.isAdmin ? "admin" : "user"
-    };
-
-    console.log("Clean backend response", responseUser);
-
-    res.status(200).json(responseUser);
+    const newUserRes = {
+      ...user,
+      role:user.isAdmin ? "admin" : "user"
+    }
+    console.log("this response", newUserRes)
+    res.status(200).json(newUserRes);
 
   } catch (error: any) {
     console.error("Fetching user error", error);
@@ -48,6 +43,9 @@ export class UserController {
         try {
             const {userData, token} = await this.userService.loginUser(req.body)
             const newData = {...userData,role:userData.isAdmin ? 'admin' : 'user'}
+
+            console.log("This is login user", newData)
+            console.log("This is login user token", token)
             res.status(200).json({message:"success", user:newData, token:token})
         } catch (error:any) {
             console.error("Error found in the login user", error);

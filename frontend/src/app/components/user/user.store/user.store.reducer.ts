@@ -41,8 +41,8 @@ on(signupSuccess, (state, { user, token }) => ({
  on(autoLoginSuccess, (state, { user }) => ({
   ...state,
   user,
-  token: state.token ?? localStorage.getItem('token'), // set token if not already there
-  role: user.role, // ✅ store role
+  token: state.token ?? localStorage.getItem('token'),
+  role: user.role, 
   loading: false,
   error: null,
 }))
@@ -96,4 +96,17 @@ on(updateUserSuccess, (state, { user }) => {
     loading: false,
     error,
   })),
+
+  on(logout,(state)=>{
+    return {
+      ...state,
+      user: null,
+  token: null,
+  role: null,
+  loading: false,
+  error: null
+
+    }
+  })
+
 );

@@ -40,8 +40,7 @@ export class UserService {
     }
 
     getUser = async(data:any)=>{
-        const {userId} = data
-        console.log("thsi is user id ",userId)
+      const {userId} = data
         const userData = await this.userRepository.getUser(userId)
         console.log("get data from frontend", userData)
         if(!userData){

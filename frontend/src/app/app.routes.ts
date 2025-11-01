@@ -11,7 +11,8 @@ import { AdminHeaderComponent } from './components/admin/admin-header/admin-head
 
 export const routes: Routes = [
 { path: 'signup', component: UserSignupComponent },
+{ path: 'login', component: UserLoginComponent },
 {path:'profile', component:UserProfileComponent},
-{path:'admindashboard', component:AdminHeaderComponent}
+{path:'admindashboard', component:AdminComponent}
 
 ];

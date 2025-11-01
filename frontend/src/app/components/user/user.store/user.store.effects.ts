@@ -55,20 +55,21 @@ export class AuthEffects {
           this.router.navigate(['/profile']);
         })
       ),
-    { dispatch: false }
-  );
-
-  autoLogin$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(autoLogin),
-    switchMap(() => {
-      const token = this.userService.getToken();
-      if (!token) return of(logout());
-
-      return this.userService.getUser().pipe(
-        map((user: any) => {
-          console.log("this is auto login", user)
-          return autoLoginSuccess({ user });
+      { dispatch: false }
+    );
+    
+    autoLogin$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(autoLogin),
+        switchMap(() => {
+          const token = this.userService.getToken();
+          if (!token) return of(logout());
+          
+          return this.userService.getUser().pipe(
+            map((user: any) => {
+              console.log("this is auto login", user)
+              // this.router.navigate(['/profile']);
+              return autoLoginSuccess({ user });
         }),
         catchError(() => of(logout()))
       );
@@ -82,9 +83,10 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(loginUser),
       mergeMap(({ userData }) =>{
-        console.log("This login user data",userData)
+        // console.log("This login user data from effect",userData)
        return  this.userService.login(userData).pipe(
           map((resp: any) => {
+            console.log("This login user data from effect",resp)
             return loginUserSuccess({ user: resp.user, token: resp.token });
           }),
           catchError((error) => of(loginUserFailure({ error: error.message })))
@@ -98,8 +100,8 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(loginUserSuccess),
-        tap(({ user }) => {
-          console.log("THis is effect", user)
+        tap(({ user, token }) => {
+          localStorage.setItem('token', token)
           if (user.role === 'admin') {
             this.router.navigate(['/admindashboard']);
           } else {
@@ -128,4 +130,17 @@ updateUser$ = createEffect(() =>
     )
   )
 );
+
+
+logout$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(logout),
+    tap(() => {
+      localStorage.removeItem('token');
+    })
+  ),
+  { dispatch: false } // ✅ no new action is dispatched
+);
+
+
 }
