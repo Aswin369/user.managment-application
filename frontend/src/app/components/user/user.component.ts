@@ -7,7 +7,6 @@ import { getRole, getUser } from './user.store/user.store.selector';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { AdminLoginComponent } from '../admin/components/admin-login/admin-login.component';
 import { AdminHeaderComponent } from '../admin/admin-header/admin-header.component';
 import { RouterOutlet } from '@angular/router';
 import { AdminComponent } from '../admin/admin.component';
