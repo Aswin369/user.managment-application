@@ -9,17 +9,19 @@ import { provideEffects } from '@ngrx/effects';
 import { userAuthReducer } from './components/user/user.store/user.store.reducer';
 import { AuthEffects } from './components/user/user.store/user.store.effects';
 import { authInterceptor } from './interceptor/auth.interceptor';
+import { adminUserReducer } from './components/admin/admin.store/admin.store.reducer';
+import { AdminUserEffect } from './components/admin/admin.store/admin.store.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideStore({ auth: userAuthReducer }),
-    provideEffects([AuthEffects]),
+    provideStore({ auth: userAuthReducer,  adminUser: adminUserReducer}),
+    provideEffects([AuthEffects, AdminUserEffect]),
     provideToastr({
       timeOut: 4000,
-      positionClass: 'toast-top-right', // ✅ Changed to top-right
+      positionClass: 'toast-top-right',
       progressBar: true,
       closeButton: true,
       easing: 'ease-in',

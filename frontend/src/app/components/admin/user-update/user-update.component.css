@@ -1,0 +1,239 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.updateFormBody {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgb(250, 248, 241) 0%,
+    rgb(240, 235, 220) 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.modal-overlay {
+  background: rgba(76, 118, 59, 0.15);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: rgb(250, 248, 241);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(76, 118, 59, 0.25);
+  max-width: 600px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  background: linear-gradient(
+    135deg,
+    rgb(76, 118, 59) 0%,
+    rgb(96, 138, 79) 100%
+  );
+  padding: 30px 40px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.close-btn::before,
+.close-btn::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background: white;
+}
+
+.close-btn::before {
+  transform: rotate(45deg);
+}
+
+.close-btn::after {
+  transform: rotate(-45deg);
+}
+
+.header-content h2 {
+  font-size: 28px;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.header-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.modal-body {
+  padding: 40px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(76, 118, 59);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid rgba(76, 118, 59, 0.2);
+  border-radius: 12px;
+  font-size: 15px;
+  color: rgb(76, 118, 59);
+  background: rgba(76, 118, 59, 0.03);
+  transition: all 0.3s ease;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: rgb(76, 118, 59);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(76, 118, 59, 0.1);
+}
+
+.form-input::placeholder {
+  color: rgba(76, 118, 59, 0.4);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 35px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: rgb(76, 118, 59);
+  color: white;
+  box-shadow: 0 4px 12px rgba(76, 118, 59, 0.3);
+}
+
+.btn-primary:hover {
+  background: rgb(66, 108, 49);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 118, 59, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: rgba(76, 118, 59, 0.1);
+  color: rgb(76, 118, 59);
+  border: 2px solid rgba(76, 118, 59, 0.2);
+}
+
+.btn-secondary:hover {
+  background: rgba(76, 118, 59, 0.15);
+  border-color: rgb(76, 118, 59);
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .modal-container {
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .modal-header {
+    padding: 25px 20px;
+  }
+
+  .modal-body {
+    padding: 30px 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    flex-direction: column-reverse;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

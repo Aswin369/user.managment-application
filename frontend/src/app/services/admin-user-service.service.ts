@@ -12,7 +12,10 @@ export class AdminUserServiceService {
   constructor(private http: HttpClient) { }
 
   getAllUsers():Observable<AdminGetUserResponse> {
-    return this.http.get<AdminGetUserResponse>(`${ADMIN_USER_API}/Userslist`)
+
+    const data =  this.http.get<AdminGetUserResponse>(`${ADMIN_USER_API}/Userslist`)
+    // console.log("This is resposne dfrom serive",data)
+    return data
   }
 
 }

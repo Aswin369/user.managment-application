@@ -4,7 +4,7 @@
             <h1>User List</h1>
             <div class="header-controls">
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search By Email....">
+                    <input type="text" class="search-input" placeholder="Search By Email...."  >
                     <button class="btn btn-search">Search</button>
                 </div>
                 <button class="btn btn-create">Create User</button>
@@ -23,22 +23,30 @@
             </thead>
             <tbody>
                 
-                <tr *ngFor="let user of users$ | async; let i=index">
+                <tr *ngFor="let user of paginatedUsers; let i=index">
                     <td>{{i+1}}</td>
                     <td>{{user.firstName}}</td>
                     <td>{{user.secondName}}</td>
                     <td>{{user.email}}</td>
                     <td>
                         <div class="action-buttons">
-                            <button class="btn btn-view">View</button>
+                            <button class="btn btn-view" (click)="openModal(user)">View</button>
                             <button class="btn btn-unblock" *ngIf="user.isBlocked">Unblock</button>
                             <button class="btn btn-block"  *ngIf="!user.isBlocked">Block</button>
-                            <button class="btn btn-edit">Edit</button>
+                            <button class="btn btn-edit" (click)="openEditModal(user._id, user)">Edit</button>
                         </div>
                     </td>
                 </tr>
                 
             </tbody>
         </table>
-    </div>
+<mat-paginator [length]="allUsers.length" [pageSize]="pageSize" (page)="changePage($event)"></mat-paginator>   
+ </div>
 </body>
+
+
+<div *ngIf="showModal">
+    <app-user-view-page [user]="selectedUser" (close)="closeModal()"></app-user-view-page>
+</div>
+
+<app-user-update *ngIf="showEditModal" [user]="selectedEditUser" [id]="selectedEditUserId" (closeEditModal)="closeEditModal()"></app-user-update>

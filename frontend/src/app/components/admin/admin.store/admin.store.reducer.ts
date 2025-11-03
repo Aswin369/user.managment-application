@@ -5,6 +5,7 @@ import { loadUser, loadUserFailure, loadUserSuccess } from "./admin.store.action
 export const adminUserReducer = createReducer(
     initialState,
     on(loadUser,(state)=>{
+        console.log("Thsi is from reducer")
         return {
             ...state,
             loading:true,

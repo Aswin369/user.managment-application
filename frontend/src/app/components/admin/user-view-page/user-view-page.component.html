@@ -1,0 +1,82 @@
+<div class="viewUserBody">
+    <div class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-left">
+                <button class="close-btn" aria-label="Close" (click)="onClose()"></button>
+                
+                <div class="profile-image-container">
+                    @if(user?.profileImage){
+                        <img [src]="user?.profileImage" alt="Profile Picture" class="profile-image">
+                    }@else {
+
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aswin" alt="Profile Picture" class="profile-image">
+                    }
+                </div>
+
+                <div class="user-name">
+                    <h2>{{user?.firstName}} {{user?.secondName}}</h2>
+                </div>
+                <div class="user-email">{{user?.email}}</div>
+
+                <div class="badges">
+                    <span class="badge badge-admin">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                        </svg>
+                        @if(user?.isAdmin){
+                            Admin
+                        }@else {
+                            User
+                        }
+                    </span>
+                    <span class="badge"
+      [ngClass]="user?.isBlocked ? 'badge-blocked' : 'badge-active'">
+    <svg class="badge-icon" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="12" r="10"/>
+    </svg>
+
+    @if(user?.isBlocked){
+      Blocked
+    } @else {
+      Active
+    }
+</span>
+
+                </div>
+            </div>
+
+            <div class="modal-right">
+                <h3 class="section-title">Account Information</h3>
+                
+                <div class="info-grid">
+                    <div class="info-item full-width">
+                        <div class="info-label">User ID</div>
+                        <div class="info-value">N/A</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">First Name</div>
+                        <div class="info-value">{{user?.firstName}}</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Last Name</div>
+                        <div class="info-value">{{user?.secondName}}</div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="info-item">
+                        <div class="info-label">Account Created</div>
+                        <div class="info-value"> {{ user?.createdAt | date:'mediumDate'}}</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Last Updated</div>
+                        <div class="info-value">{{user?.updatedAt | date:'mediumDate'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

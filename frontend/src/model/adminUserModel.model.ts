@@ -7,6 +7,6 @@ export interface AdminUserModel {
     isAdmin:boolean;
     role: 'user' | 'admin';
     isBlocked:boolean;
-    createAt:Date;
+    createdAt:Date;
     updatedAt:Date
 }
