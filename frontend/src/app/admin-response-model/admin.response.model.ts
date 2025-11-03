@@ -10,3 +10,9 @@ export interface adminUserBlockUnblockResponse {
     success:boolean;
     message:string
 }
+
+export interface AdminUpdatedUserResponse {
+    success:boolean;
+    message:string;
+    updatedUser:AdminUserModel
+}

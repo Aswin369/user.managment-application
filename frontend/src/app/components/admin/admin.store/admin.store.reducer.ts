@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./admin.store.state";
-import { loadUser, loadUserFailure, loadUserSuccess } from "./admin.store.action";
+import { loadUser, loadUserFailure, loadUserSuccess, upadateUserFailure, updateUserSuccess } from "./admin.store.action";
 
 export const adminUserReducer = createReducer(
     initialState,
@@ -26,5 +26,23 @@ export const adminUserReducer = createReducer(
             loading:false,
             error
         }
-    })
+    }),
+    on(updateUserSuccess, (state, { updatedUser }) => {
+  const users = state.users.map(user =>
+    user._id === updatedUser._id ? updatedUser : user
+  );
+
+  return {
+    ...state,
+    users,
+    error:null
+  };
+}),
+on(upadateUserFailure,(state,{error})=>{
+    return {
+        ...state,
+        error
+    }
+})
+
 )
