@@ -4,7 +4,7 @@
             <h1>User List</h1>
             <div class="header-controls">
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search users...">
+                    <input type="text" class="search-input" placeholder="Search By Email....">
                     <button class="btn btn-search">Search</button>
                 </div>
                 <button class="btn btn-create">Create User</button>
@@ -22,58 +22,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john.doeexample.com</td>
+                
+                <tr *ngFor="let user of users$ | async; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.secondName}}</td>
+                    <td>{{user.email}}</td>
                     <td>
                         <div class="action-buttons">
                             <button class="btn btn-view">View</button>
-                            <button class="btn btn-block">Block</button>
+                            <button class="btn btn-unblock" *ngIf="user.isBlocked">Unblock</button>
+                            <button class="btn btn-block"  *ngIf="!user.isBlocked">Block</button>
                             <button class="btn btn-edit">Edit</button>
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jane</td>
-                    <td>Smith</td>
-                    <td>jane.smithexample.com</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-view">View</button>
-                            <button class="btn btn-block">Block</button>
-                            <button class="btn btn-edit">Edit</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Michael</td>
-                    <td>Johnson</td>
-                    <td>michael.jexample.com</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-view">View</button>
-                            <button class="btn btn-unblock">Unblock</button>
-                            <button class="btn btn-edit">Edit</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Emily</td>
-                    <td>Davis</td>
-                    <td>emily.davisexample.com</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-view">View</button>
-                            <button class="btn btn-block">Block</button>
-                            <button class="btn btn-edit">Edit</button>
-                        </div>
-                    </td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
