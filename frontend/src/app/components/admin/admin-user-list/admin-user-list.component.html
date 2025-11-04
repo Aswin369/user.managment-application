@@ -7,7 +7,7 @@
                     <input type="text" class="search-input" placeholder="Search By Email...."  >
                     <button class="btn btn-search">Search</button>
                 </div>
-                <button class="btn btn-create">Create User</button>
+                <button class="btn btn-create" (click)="onOpenCreateModal()">Create User</button>
             </div>
         </div>
         
@@ -52,3 +52,5 @@
 <app-user-update *ngIf="showEditModal" [user]="selectedEditUser" [id]="selectedEditUserId" (closeEditModal)="closeEditModal()"></app-user-update>
 
 <app-popup-block-unblock *ngIf="showConfirmPopup" [isBlocking]="isBlocking" (confirm)="confirmAction()" (cancel)="closePopup()"></app-popup-block-unblock>
+
+<app-create-new-user *ngIf="createUserModal"  (cancel)="offCreateModal()"></app-create-new-user>

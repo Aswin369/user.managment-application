@@ -9,10 +9,11 @@ import { MatPaginatorModule } from '@angular/material/paginator'
 import { UserViewPageComponent } from '../user-view-page/user-view-page.component';
 import { UserUpdateComponent } from '../user-update/user-update.component';
 import { PopupBlockUnblockComponent } from '../popup-block-unblock/popup-block-unblock.component';
+import { CreateNewUserComponent } from '../create-new-user/create-new-user.component';
 
 @Component({
   selector: 'app-admin-user-list',
-  imports: [CommonModule,MatPaginatorModule, UserViewPageComponent, UserUpdateComponent, PopupBlockUnblockComponent],
+  imports: [CommonModule,MatPaginatorModule, UserViewPageComponent, UserUpdateComponent, PopupBlockUnblockComponent, CreateNewUserComponent],
   templateUrl: './admin-user-list.component.html',
   styleUrl: './admin-user-list.component.css'
 })
@@ -103,4 +104,12 @@ onBlock(userId:string) {
     this.showConfirmPopup = true
 }
 
+  createUserModal:boolean = false
+onOpenCreateModal() {
+  this.createUserModal = true
+}
+
+offCreateModal() {
+  this.createUserModal = false
+}
 }

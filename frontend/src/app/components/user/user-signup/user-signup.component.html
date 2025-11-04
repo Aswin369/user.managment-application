@@ -50,7 +50,8 @@
 
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" formControlName="confirmPassword"  id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required><div *ngIf="passwordMismatch">
+                <input type="password" formControlName="confirmPassword"  id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                <div *ngIf="passwordMismatch">
                     <small style="color: red;">Passwords do not match.</small>
                 </div>
             </div>
