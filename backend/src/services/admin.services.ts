@@ -1,5 +1,7 @@
+import { emit } from "process";
 import { IAdminRepository } from "../repositories/interface/admin.repository.interface";
 import { User } from "../types/user.interface";
+import  bcrypt  from 'bcrypt'
 
 export class AdminService {
     constructor( private adminRepository: IAdminRepository) {}
@@ -24,4 +26,48 @@ export class AdminService {
         return updatedUser
     }
 
+    createUser = async(user:Partial<User>)=>{
+        const {firstName,secondName, email, password} = user
+
+        if(!email){
+            throw new Error("Please Provide email")
+        }
+
+        const existingUser = await this.adminRepository.findUserByMail(email)
+        console.log("i got exixting user",existingUser)
+        if(existingUser){
+            throw new Error("This mail have already regestered")
+        }
+
+        if(!password){
+            throw new Error("Please provide password")
+        }
+
+        if(!firstName) {
+            throw new Error("Please provide Your firstName")
+        }
+        if(!secondName) {
+            throw new Error("Please provide Your secondName")
+        }
+
+        const hashedPassword = await bcrypt.hash(password,10)
+        const newUserData:User = {
+            firstName:firstName,
+            secondName:secondName,
+            email:email,
+            password:hashedPassword
+        }
+
+        const update = await this.adminRepository.createUser(newUserData)
+        return update
+    }
+
 }
+
+// [1] {
+// [1]   firstName: 'asdf',
+// [1]   secondName: 'Vdfs',
+// [1]   email: 'aswinfsdfvsdf793@gmail.com',
+// [1]   password: 'Aswinv@3690',
+// [1]   confirmPassword: 'Aswinv@3690'
+// [1] }

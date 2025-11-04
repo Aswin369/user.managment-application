@@ -14,7 +14,6 @@ export class AdminUserServiceService {
   getAllUsers():Observable<AdminGetUserResponse> {
 
     const data =  this.http.get<AdminGetUserResponse>(`${ADMIN_USER_API}/Userslist`)
-    // console.log("This is resposne dfrom serive",data)
     return data
   }
 
@@ -24,6 +23,10 @@ export class AdminUserServiceService {
 
   userBlockAndUnblock(userId:string, userData:boolean):Observable<AdminUpdatedUserResponse>{
     return this.http.put<AdminUpdatedUserResponse>(`${ADMIN_USER_API}/blockAndUblock`,{userId,userData})
+  }
+
+  createUser(user:AdminUserModel):Observable<AdminUpdatedUserResponse> {
+    return this.http.post<AdminUpdatedUserResponse>(`${ADMIN_USER_API}/createuser`,user)
   }
 
 }

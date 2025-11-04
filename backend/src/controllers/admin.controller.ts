@@ -38,4 +38,16 @@ export class AdminController {
             res.status(500).json({success:false, message:"Failed to fetch users", error:error.message})
         }
     }
+
+    createUser = async (req:Request,res:Response)=>{
+        try {
+            const user = req.body
+            const updatedUser = await this.adminService.createUser(user)
+            res.status(200).json({success:true,message:"Updated users", updatedUser})
+        } catch (error:any) {
+            console.log("Something went wrong when create user by admin",error)
+            res.status(500).json({success:false, message:"Failed to fetch users", error:error.message})
+        }
+    }
 }
+

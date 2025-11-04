@@ -5,3 +5,4 @@ export const selectAdminUserState = createFeatureSelector<AdminUserState>('admin
 
 export const selectAdminUser = createSelector(selectAdminUserState,(state)=>state.users)
 export const selectAdminUserLoading = createSelector(selectAdminUserState,(state)=>state.loading)
+export const selectAdminUserError = createSelector(selectAdminUserState,(state)=>state.error)

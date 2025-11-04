@@ -15,4 +15,5 @@ const adminController = new AdminController(adminService)
 router.get('/Userslist',adminController.getALlUser)
 router.put('/updateexistinguser',adminController.updatedExistingUser)
 router.put('/blockAndUblock', adminController.blockAndUnblock)
+router.post('/createuser',adminController.createUser)
 export default router

@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { createUser } from '../admin.store/admin.store.action';
+import { Observable } from 'rxjs';
+import { selectAdminUserError } from '../admin.store/admin.store.selector';
 
 @Component({
   selector: 'app-create-new-user',
@@ -11,8 +15,8 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 export class CreateNewUserComponent {
   @Output() cancel = new EventEmitter<void>()
   createUser!:FormGroup
-
-  constructor(private fb: FormBuilder) {}
+  createUserError!:Observable<string | null>
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   close() {
     this.cancel.emit()
@@ -26,6 +30,12 @@ export class CreateNewUserComponent {
       password:['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$')]],
       confirmPassword: ['', Validators.required]
     },{validators:[this.passwordIsMatch()]})
+
+    this.createUserError = this.store.select(selectAdminUserError)
+
+
+    
+
   }
 
   passwordIsMatch():ValidatorFn {
@@ -42,7 +52,13 @@ export class CreateNewUserComponent {
   }
 
   onCreateUser() {
-
+    if(this.createUser.invalid){
+      this.createUser.markAllAsTouched()
+      return
+    }
+    console.log("This create user",this.createUser.value)
+    this.store.dispatch(createUser({user:this.createUser.value}))
+    this.cancel.emit()
   }
 
 }

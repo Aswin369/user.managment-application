@@ -33,8 +33,16 @@
                                     id="firstName" 
                                     class="form-input" 
                                     placeholder="Enter first name"
+                                    formControlName="firstName"
+                                    name="firstName"
                                     required
                                 >
+            <div *ngIf="createUser.get('firstName')?.touched && createUser.get('firstName')?.invalid">
+                <small *ngIf="createUser.get('firstName')?.errors?.['required']" style="color: red;">First name is required </small>
+                <small *ngIf="createUser.get('firstName')?.errors?.['minlength']" style="color: red;" >Minimum length is 3 characters</small>
+                <small *ngIf="createUser.get('firstName')?.errors?.['maxlength']" style="color: red;">Maximum length is 10 characters </small>
+                <small *ngIf="createUser.get('firstName')?.errors?.['pattern']"style="color: red;">Cannot to be write numbers </small>
+            </div>
                             </div>
 
                             <div class="form-group">
@@ -46,8 +54,16 @@
                                     id="secondName" 
                                     class="form-input" 
                                     placeholder="Enter second name"
+                                    formControlName="secondName"
+                                    name="secondName"
                                     required
                                 >
+            <div *ngIf="createUser.get('secondName')?.touched && createUser.get('firstName')?.invalid">
+                <small *ngIf="createUser.get('secondName')?.errors?.['required']" style="color: red;">First name is required </small>
+                <small *ngIf="createUser.get('secondName')?.errors?.['minlength']" style="color: red;" >Minimum length is 3 characters </small>
+                <small *ngIf="createUser.get('secondName')?.errors?.['maxlength']" style="color: red;">Maximum length is 10 characters </small>
+                <small *ngIf="createUser.get('secondName')?.errors?.['pattern']"style="color: red;">Cannot to be write numbers </small>
+            </div>
                             </div>
                         </div>
 
@@ -60,8 +76,14 @@
                                 id="email" 
                                 class="form-input" 
                                 placeholder="Enter email address"
+                                formControlName="email"
+                                name="email"
                                 required
                             >
+                            <div *ngIf="createUser.get('email')?.touched && createUser.get('email')?.invalid">
+                    <small *ngIf="createUser.get('email')?.errors?.['required']" style="color: red;">Email is required </small>
+                    <small  *ngIf="createUser.get('email')?.errors?.['email']" style="color: red;" >Please provide valid email </small>
+                </div>
                         </div>
                     </div>
 
@@ -107,6 +129,8 @@
                                 id="confirmPassword" 
                                 class="form-input" 
                                 placeholder="Confirm password"
+                                formControlName="confirmPassword"  
+                                name="confirmPassword"
                                 required
                             >
                         </div>

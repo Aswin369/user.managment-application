@@ -12,3 +12,7 @@ export const upadateUserFailure = createAction('[Admin User] Update User Failure
 export const blockUser = createAction('[Admin User] BlockUser',props<{userId: string; isBlocked: boolean}>())
 export const updateUserBlockSuccess = createAction('[Admin User] Update user block status Success',props<{updatedUser:AdminUserModel}>())
 export const updateUserBlockFailure = createAction('[Admin User], Update user block status failure',props<{error:string}>())
+
+export const createUser = createAction('[Admin User] Create User',props<{user:AdminUserModel}>())
+export const createUserSuccess = createAction('[Admin user] Create User Success',props<{user:AdminUserModel}>())
+export const createUserFailure = createAction('[Admin user] Create User Failure',props<{error:string}>())

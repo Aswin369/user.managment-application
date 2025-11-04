@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { AdminUserServiceService } from "../../../services/admin-user-service.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { blockUser, loadUser, loadUserFailure, loadUserSuccess, upadateUserFailure, updateUser, updateUserBlockFailure, updateUserBlockSuccess, updateUserSuccess } from "./admin.store.action";
+import { blockUser, createUser, createUserFailure, createUserSuccess, loadUser, loadUserFailure, loadUserSuccess, upadateUserFailure, updateUser, updateUserBlockFailure, updateUserBlockSuccess, updateUserSuccess } from "./admin.store.action";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 
@@ -67,6 +67,24 @@ updateUserBlockStatus$ = createEffect(() =>
     )
   )
 );
+
+createUser$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(createUser),
+    mergeMap(({ user }) =>
+      this.adminUserService.createUser(user).pipe(
+        map(response =>{
+          this.toast.success("User Created")
+           return createUserSuccess({ user: response.updatedUser })}),
+        catchError(error =>{
+          this.toast.error("Failed to create user")
+          return of(createUserFailure({ error: error.error?.message || 'Failed to create user' }))
+})
+      )
+    )
+  )
+);
+
 
 
 }
