@@ -62,6 +62,11 @@ export class AdminService {
         return update
     }
 
+    async getUserbyEmail(term:string){
+        const users = this.adminRepository.getUserbyEmail(term)
+        return users
+    }
+
 }
 
 // [1] {

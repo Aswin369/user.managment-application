@@ -40,6 +40,8 @@ onShowSignup() {
   onShowLogin() {
     this.showLogin = true;
   }
-
+hasToken():boolean {
+  return !!localStorage.getItem('token')
+}
 
 }

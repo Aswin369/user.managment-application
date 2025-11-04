@@ -3,6 +3,9 @@ import { User } from "../../types/user.interface";
 import { IAdminRepository } from "../interface/admin.repository.interface";
 
 export class AdminRepository implements IAdminRepository{
+    async getUserbyEmail(term: string): Promise<User[] | null> {
+       return await UserModel.find({email:{ $regex: term, $options:'i'}}).lean().select('-password')
+    }
     async createUser(userData: User): Promise<User> {
         const user = new UserModel(userData)
          await user.save()

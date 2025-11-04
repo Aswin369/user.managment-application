@@ -143,7 +143,7 @@ logout$ = createEffect(() =>
       localStorage.removeItem('token');
     })
   ),
-  { dispatch: false } // ✅ no new action is dispatched
+  { dispatch: false }
 );
 
 

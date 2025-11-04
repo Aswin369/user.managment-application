@@ -28,5 +28,7 @@ export class AdminUserServiceService {
   createUser(user:AdminUserModel):Observable<AdminUpdatedUserResponse> {
     return this.http.post<AdminUpdatedUserResponse>(`${ADMIN_USER_API}/createuser`,user)
   }
-
+   getAllUsersBySearch(query:string):Observable<AdminGetUserResponse>{
+    return this.http.get<AdminGetUserResponse>(`${ADMIN_USER_API}/search?query=${encodeURIComponent(query)}`)
+   }
 }

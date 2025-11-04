@@ -4,8 +4,9 @@
             <h1>User List</h1>
             <div class="header-controls">
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search By Email...."  >
-                    <button class="btn btn-search">Search</button>
+                    <input type="text" class="search-input" placeholder="Search By Email...."  [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+                    <button class="btn btn-search" (click)="onSearch()">Search</button>
+                    <button class="btn btn-search" *ngIf="searchTerm" (click)="onClearSearch()">Clear</button>
                 </div>
                 <button class="btn btn-create" (click)="onOpenCreateModal()">Create User</button>
             </div>
@@ -54,3 +55,4 @@
 <app-popup-block-unblock *ngIf="showConfirmPopup" [isBlocking]="isBlocking" (confirm)="confirmAction()" (cancel)="closePopup()"></app-popup-block-unblock>
 
 <app-create-new-user *ngIf="createUserModal"  (cancel)="offCreateModal()"></app-create-new-user>
+

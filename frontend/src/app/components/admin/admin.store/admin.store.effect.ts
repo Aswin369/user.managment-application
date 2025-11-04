@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { AdminUserServiceService } from "../../../services/admin-user-service.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { blockUser, createUser, createUserFailure, createUserSuccess, loadUser, loadUserFailure, loadUserSuccess, upadateUserFailure, updateUser, updateUserBlockFailure, updateUserBlockSuccess, updateUserSuccess } from "./admin.store.action";
+import { blockUser, createUser, createUserFailure, createUserSuccess, loadUser, loadUserFailure, loadUserSuccess, searchUserFailure, searchUsers, searchUserSuccess, upadateUserFailure, updateUser, updateUserBlockFailure, updateUserBlockSuccess, updateUserSuccess } from "./admin.store.action";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 
@@ -85,6 +85,18 @@ createUser$ = createEffect(() =>
   )
 );
 
-
+searchUsers$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(searchUsers),
+    mergeMap(({ query }) =>
+      this.adminUserService.getAllUsersBySearch(query).pipe(
+        map(response => searchUserSuccess({ users: response.users })),
+        catchError(error =>
+          of(searchUserFailure({ error: error.message || 'Search failed' }))
+        )
+      )
+    )
+  )
+);
 
 }

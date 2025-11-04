@@ -2,23 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { identity, Observable } from 'rxjs';
 import { AdminUserModel } from '../../../../model/adminUserModel.model';
 import { Store } from '@ngrx/store';
-import { blockUser, loadUser } from '../admin.store/admin.store.action';
-import { selectAdminUser } from '../admin.store/admin.store.selector';
-import { CommonModule } from '@angular/common';
+import { blockUser, loadUser, searchUsers } from '../admin.store/admin.store.action';
+import { selectAdminUser, selectAdminUserLoading } from '../admin.store/admin.store.selector';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { UserViewPageComponent } from '../user-view-page/user-view-page.component';
 import { UserUpdateComponent } from '../user-update/user-update.component';
 import { PopupBlockUnblockComponent } from '../popup-block-unblock/popup-block-unblock.component';
 import { CreateNewUserComponent } from '../create-new-user/create-new-user.component';
+import { FormsModule } from '@angular/forms';
+import { LoadingpageComponent } from '../../loadingpage/loadingpage.component';
 
 @Component({
   selector: 'app-admin-user-list',
-  imports: [CommonModule,MatPaginatorModule, UserViewPageComponent, UserUpdateComponent, PopupBlockUnblockComponent, CreateNewUserComponent],
+  imports: [CommonModule,MatPaginatorModule, UserViewPageComponent, UserUpdateComponent, PopupBlockUnblockComponent, CreateNewUserComponent, FormsModule, LoadingpageComponent],
   templateUrl: './admin-user-list.component.html',
   styleUrl: './admin-user-list.component.css'
 })
 export class AdminUserListComponent implements OnInit{
-  // users$!:Observable<AdminUserModel[] | null>
+
   allUsers:AdminUserModel[] = []
   paginatedUsers: AdminUserModel[] = []
   pageSize = 3
@@ -29,6 +31,7 @@ export class AdminUserListComponent implements OnInit{
   showEditModal:boolean = false
   selectedEditUserId:string = ""
   selectedEditUser:AdminUserModel | null = null
+
   constructor(private store: Store) {}
   ngOnInit(): void {
     console.log("asdfasdfasdfasdf")
@@ -39,6 +42,7 @@ export class AdminUserListComponent implements OnInit{
         this.setPageData()
       }
     })
+
   }
 
   setPageData() {
@@ -112,4 +116,20 @@ onOpenCreateModal() {
 offCreateModal() {
   this.createUserModal = false
 }
+
+// implement search
+
+searchTerm:string = ''
+onSearch() {
+  const term = this.searchTerm.trim()
+  if(term){
+    this.store.dispatch(searchUsers({query:term}))
+  }
+}
+
+onClearSearch() {
+  this.searchTerm = ''
+  this.store.dispatch(loadUser())
+}
+
 }

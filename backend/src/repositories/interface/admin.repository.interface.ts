@@ -6,4 +6,5 @@ export interface IAdminRepository {
     blockAndUnblock(userId:string, userData:boolean):Promise<User | null>
     findUserByMail(email:string):Promise<User | null>
     createUser(userData:User):Promise<User | null>
+    getUserbyEmail(term:string):Promise<User[] | null>
 }   

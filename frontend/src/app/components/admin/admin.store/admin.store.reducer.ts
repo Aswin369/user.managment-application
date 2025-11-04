@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./admin.store.state";
-import { createUser, createUserFailure, createUserSuccess, loadUser, loadUserFailure, loadUserSuccess, upadateUserFailure, updateUserBlockFailure, updateUserBlockSuccess, updateUserSuccess } from "./admin.store.action";
+import { adminLogout, createUser, createUserFailure, createUserSuccess, loadUser, loadUserFailure, loadUserSuccess, searchUserFailure, searchUsers, searchUserSuccess, upadateUserFailure, updateUserBlockFailure, updateUserBlockSuccess, updateUserSuccess } from "./admin.store.action";
 
 export const adminUserReducer = createReducer(
     initialState,
@@ -68,6 +68,28 @@ on(createUserSuccess,(state,{user})=>{
 on(createUserFailure,(state,{error})=>{
     return{
         ...state,
+        error
+    }
+}),
+on(searchUsers,(state)=>{
+    return {
+        ...state,
+        loading:true,
+        error:null
+    }
+}),
+on(searchUserSuccess,(state,{users})=>{
+    return {
+        ...state,
+        users,
+        loading:false,
+        error:null
+    }
+}),
+on(searchUserFailure,(state,{error})=>{
+    return {
+        ...state,
+        loading:false,
         error
     }
 })

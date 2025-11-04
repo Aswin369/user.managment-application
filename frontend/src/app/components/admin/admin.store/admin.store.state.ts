@@ -1,7 +1,7 @@
 import { AdminUserModel } from "../../../../model/adminUserModel.model";
 
 export interface AdminUserState {
-    users:AdminUserModel[];
+    users:AdminUserModel[] ;
     loading:boolean;
     error:string | null
 }

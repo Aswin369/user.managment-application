@@ -3,14 +3,12 @@
   <ng-container *ngIf="(getRole$ | async) as role">
 
     <!-- ✅ Admin Role -->
-    <ng-container *ngIf="role === 'admin'; else userRole">
+    <ng-container *ngIf="role === 'admin' && hasToken(); else userRole">
       <app-admin></app-admin>
-      <!-- <router-outlet></router-outlet> -->
     </ng-container>
 
     <!-- ✅ Normal User -->
     <ng-template #userRole>
-      <!-- <h1>asdf</h1> -->
       <app-user-profile></app-user-profile>
     </ng-template>
 

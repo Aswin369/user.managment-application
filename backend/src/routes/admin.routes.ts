@@ -16,4 +16,5 @@ router.get('/Userslist',adminController.getALlUser)
 router.put('/updateexistinguser',adminController.updatedExistingUser)
 router.put('/blockAndUblock', adminController.blockAndUnblock)
 router.post('/createuser',adminController.createUser)
+router.get('/search',adminController.getUserbyEmail)
 export default router

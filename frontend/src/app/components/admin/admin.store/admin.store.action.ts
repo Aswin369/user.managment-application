@@ -16,3 +16,9 @@ export const updateUserBlockFailure = createAction('[Admin User], Update user bl
 export const createUser = createAction('[Admin User] Create User',props<{user:AdminUserModel}>())
 export const createUserSuccess = createAction('[Admin user] Create User Success',props<{user:AdminUserModel}>())
 export const createUserFailure = createAction('[Admin user] Create User Failure',props<{error:string}>())
+
+export const searchUsers = createAction('[Admin Users] Search user',props<{query:string}>())
+export const searchUserSuccess = createAction('[Admin Users] Search users success',props<{users:AdminUserModel[]}>())
+export const searchUserFailure = createAction('[Admin Users] search users failure',props<{error:string}>())
+
+export const adminLogout = createAction('[Admin User] logout')
