@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { identity, Observable } from 'rxjs';
 import { AdminUserModel } from '../../../../model/adminUserModel.model';
 import { Store } from '@ngrx/store';
-import { loadUser } from '../admin.store/admin.store.action';
+import { blockUser, loadUser } from '../admin.store/admin.store.action';
 import { selectAdminUser } from '../admin.store/admin.store.selector';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { UserViewPageComponent } from '../user-view-page/user-view-page.component';
 import { UserUpdateComponent } from '../user-update/user-update.component';
+import { PopupBlockUnblockComponent } from '../popup-block-unblock/popup-block-unblock.component';
 
 @Component({
   selector: 'app-admin-user-list',
-  imports: [CommonModule,MatPaginatorModule, UserViewPageComponent, UserUpdateComponent],
+  imports: [CommonModule,MatPaginatorModule, UserViewPageComponent, UserUpdateComponent, PopupBlockUnblockComponent],
   templateUrl: './admin-user-list.component.html',
   styleUrl: './admin-user-list.component.css'
 })
@@ -68,5 +69,38 @@ closeEditModal() {
   this.showEditModal = false;
 }
 
+
+
+
+// Popup Implementaion 
+selectedUserId!: string | null
+showConfirmPopup = false
+isBlocking = false
+
+
+confirmAction() {
+  if(!this.selectedUserId) return
+this.store.dispatch(blockUser({userId: this.selectedUserId,isBlocked: this.isBlocking}))
+console.log({userId: this.selectedUserId,isBlocked: this.isBlocking})
+    this.closePopup()
+}
+
+  closePopup() {
+    this.showConfirmPopup = false
+    this.selectedUserId = null;
+  }
+
+
+  onUnblock(userId:string) {
+    this.selectedUserId = userId
+    this.isBlocking = false
+    this.showConfirmPopup = true
+}
+
+onBlock(userId:string) {
+  this.selectedUserId = userId
+    this.isBlocking = true
+    this.showConfirmPopup = true
+}
 
 }

@@ -89,7 +89,11 @@ export class AuthEffects {
             console.log("This login user data from effect",resp)
             return loginUserSuccess({ user: resp.user, token: resp.token });
           }),
-          catchError((error) => of(loginUserFailure({ error: error.message })))
+          
+          catchError((error:any) => {
+            console.log("This is login error message ",error.message)
+            const message = error.error?.message || 'Login failed'
+           return of(loginUserFailure({ error: message }))})
         )
 })
     )

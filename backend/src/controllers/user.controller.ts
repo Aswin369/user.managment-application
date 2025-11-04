@@ -39,20 +39,34 @@ export class UserController {
   }
 };
 
-    loginUser = async(req:Request, res: Response)=>{
-        try {
-            const {userData, token} = await this.userService.loginUser(req.body)
-            const newData = {...userData,role:userData.isAdmin ? 'admin' : 'user'}
+   loginUser = async (req: Request, res: Response) => {
+    try {
+        const { userData, token } = await this.userService.loginUser(req.body);
+        const newData = { 
+            ...userData, 
+            role: userData.isAdmin ? 'admin' : 'user'
+        };
 
-            console.log("This is login user", newData)
-            console.log("This is login user token", token)
-            res.status(200).json({message:"success", user:newData, token:token})
-        } catch (error:any) {
-            console.error("Error found in the login user", error);
-            const status = error.message === "Password is Incorrect" ? 401 : error.message === "User not exist" ? 404 : 400;
-            return res.status(status).json({message: error.message || "Server error",statuscode: status})
-        }
+        res.status(200).json({
+            success: true,
+            message: "Login successful",
+            user: newData,
+            token
+        });
+
+    } catch (error: any) {
+        console.error("Error found in the login user", error);
+
+        const status = error.statuscode || 400;
+
+        return res.status(status).json({
+            success: false,
+            message: error.message || "Server error",
+            statuscode: status
+        });
     }
+}
+
 
     uploadImage = async (req: Request, res: Response) => {
   try {

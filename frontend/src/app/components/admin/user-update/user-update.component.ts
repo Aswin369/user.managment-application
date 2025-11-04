@@ -44,6 +44,7 @@ onEditUser() {
   }
   console.log("Updated user",this.editUser.value)
   this.store.dispatch(updateUser({userData:this.editUser.value, userId:this.id}))
+  this.close()
 }
 
 }

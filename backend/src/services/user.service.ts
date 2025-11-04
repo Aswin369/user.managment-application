@@ -59,6 +59,12 @@ export class UserService {
             throw error
         }
 
+        if(userData.isBlocked){
+          const error:any = new Error("User Blocked by admin")
+            error.statuscode = 404
+            throw error
+        }
+
         const passwordIsmatch = await bcrypt.compare(password, userData.password)
         if(!passwordIsmatch){
             const error: any = new Error("Password is Incorrect")

@@ -1,0 +1,23 @@
+<div class="pop-body">
+    <!-- Example: Block User Confirmation -->
+   <div class="confirmation-overlay">
+  <div class="confirmation-box">
+    <div class="icon-container">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+
+    <h3>Are you sure?</h3>
+    <p>Do you want to {{ isBlocking ? 'block' : 'unblock' }} this user?</p>
+
+    <div class="popup-buttons">
+      <button class="btn btn-cancel" (click)="cancel.emit()">No</button>
+      <button class="btn btn-confirm" (click)="confirm.emit()">Yes</button>
+    </div>
+  </div>
+</div>
+   
+</div>

@@ -13,6 +13,6 @@ const adminService = new AdminService(adminRepository)
 const adminController = new AdminController(adminService)
 
 router.get('/Userslist',adminController.getALlUser)
-
-
+router.put('/updateexistinguser',adminController.updatedExistingUser)
+router.put('/blockAndUblock', adminController.blockAndUnblock)
 export default router

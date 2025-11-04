@@ -31,8 +31,8 @@
                     <td>
                         <div class="action-buttons">
                             <button class="btn btn-view" (click)="openModal(user)">View</button>
-                            <button class="btn btn-unblock" *ngIf="user.isBlocked">Unblock</button>
-                            <button class="btn btn-block"  *ngIf="!user.isBlocked">Block</button>
+                            <button class="btn btn-unblock" (click)="onUnblock(user._id)" *ngIf="user.isBlocked">Unblock</button>
+                            <button class="btn btn-block"  *ngIf="!user.isBlocked" (click)="onBlock(user._id)">Block</button>
                             <button class="btn btn-edit" (click)="openEditModal(user._id, user)">Edit</button>
                         </div>
                     </td>
@@ -50,3 +50,5 @@
 </div>
 
 <app-user-update *ngIf="showEditModal" [user]="selectedEditUser" [id]="selectedEditUserId" (closeEditModal)="closeEditModal()"></app-user-update>
+
+<app-popup-block-unblock *ngIf="showConfirmPopup" [isBlocking]="isBlocking" (confirm)="confirmAction()" (cancel)="closePopup()"></app-popup-block-unblock>

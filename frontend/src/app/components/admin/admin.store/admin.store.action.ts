@@ -8,3 +8,7 @@ export const loadUserFailure = createAction('[Admin User] load User failure',pro
 export const updateUser = createAction('[Admin User] Update User',props<{userData:any, userId:string}>())
 export const updateUserSuccess = createAction("[Admin User] Update User Success", props<{updatedUser:AdminUserModel}>())
 export const upadateUserFailure = createAction('[Admin User] Update User Failure', props<{error:string}>())
+
+export const blockUser = createAction('[Admin User] BlockUser',props<{userId: string; isBlocked: boolean}>())
+export const updateUserBlockSuccess = createAction('[Admin User] Update user block status Success',props<{updatedUser:AdminUserModel}>())
+export const updateUserBlockFailure = createAction('[Admin User], Update user block status failure',props<{error:string}>())

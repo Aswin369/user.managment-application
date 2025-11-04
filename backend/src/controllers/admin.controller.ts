@@ -15,4 +15,27 @@ export class AdminController {
         }
     }
 
+    updatedExistingUser = async(req:Request, res:Response) => {
+        try{
+            const {userData,userId} = req.body
+            console.log("THisasdflk", req.body)
+            const updatedUser = await this.adminService.updatedExistingUser(userData,userId)
+            res.status(200).json({ssuccess:true,message:"Updated users", updatedUser})
+        }catch(error:any){
+            console.error("Something Went wrong while updatedExistingUser",error)
+            res.status(500).json({success:false, message:"Failed to fetch users", error:error.message})
+        }
+    }
+
+    blockAndUnblock = async (req:Request, res:Response)=>{
+        try {
+            const {userId, userData} = req.body
+            const updatedUser = await this.adminService.blockAndUnblock(userId,userData)
+            res.status(200).json({success:true,message:"Updated users", updatedUser})
+            console.log(userId, userData)
+        } catch (error:any) {
+            console.error("SomethingWent wrong blockAndUnblock", error)
+            res.status(500).json({success:false, message:"Failed to fetch users", error:error.message})
+        }
+    }
 }

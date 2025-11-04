@@ -1,0 +1,202 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pop-body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgb(250, 248, 241) 0%,
+    rgb(240, 235, 220) 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.confirmation-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(76, 118, 59, 0.2);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.confirmation-box {
+  background: rgb(250, 248, 241);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(76, 118, 59, 0.3);
+  max-width: 450px;
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  animation: slideUp 0.4s ease-out;
+  border: 2px solid rgba(76, 118, 59, 0.1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.icon-container {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 25px;
+  background: linear-gradient(
+    135deg,
+    rgba(76, 118, 59, 0.1),
+    rgba(76, 118, 59, 0.05)
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.icon-container::before {
+  content: "";
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border: 3px solid rgb(76, 118, 59);
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+.icon-container svg {
+  width: 40px;
+  height: 40px;
+  color: rgb(76, 118, 59);
+  z-index: 1;
+}
+
+.confirmation-box h3 {
+  font-size: 26px;
+  color: rgb(76, 118, 59);
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.confirmation-box p {
+  font-size: 16px;
+  color: rgba(76, 118, 59, 0.8);
+  line-height: 1.6;
+  margin-bottom: 35px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 14px 40px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.btn-confirm {
+  background: rgb(76, 118, 59);
+  color: white;
+  box-shadow: 0 4px 12px rgba(76, 118, 59, 0.3);
+}
+
+.btn-confirm:hover {
+  background: rgb(66, 108, 49);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 118, 59, 0.4);
+}
+
+.btn-confirm:active {
+  transform: translateY(0);
+}
+
+.btn-cancel {
+  background: rgba(76, 118, 59, 0.08);
+  color: rgb(76, 118, 59);
+  border: 2px solid rgba(76, 118, 59, 0.2);
+}
+
+.btn-cancel:hover {
+  background: rgba(76, 118, 59, 0.15);
+  border-color: rgb(76, 118, 59);
+  transform: translateY(-2px);
+}
+
+.btn-cancel:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 500px) {
+  .confirmation-box {
+    padding: 30px 25px;
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .confirmation-box h3 {
+    font-size: 22px;
+  }
+
+  .confirmation-box p {
+    font-size: 15px;
+  }
+
+  .popup-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

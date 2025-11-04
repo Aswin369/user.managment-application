@@ -22,4 +22,8 @@ export class AdminUserServiceService {
     return this.http.put<AdminUpdatedUserResponse>(`${ADMIN_USER_API}/updateexistinguser`,{userId, userData})
   }
 
+  userBlockAndUnblock(userId:string, userData:boolean):Observable<AdminUpdatedUserResponse>{
+    return this.http.put<AdminUpdatedUserResponse>(`${ADMIN_USER_API}/blockAndUblock`,{userId,userData})
+  }
+
 }
